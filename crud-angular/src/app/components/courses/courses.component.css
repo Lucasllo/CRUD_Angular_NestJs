@@ -1,0 +1,39 @@
+mat-card {
+  max-width: 80%;
+  max-width: 810px;
+  margin: 2rem auto;
+  text-align: center;
+}
+
+mat-toolbar {
+  background-color: #d7e3ff;
+  font-weight: 500;
+  color: #005cbb;
+}
+
+.column-flex {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+}
+
+.loading_spinner {
+  padding: 25px;
+  background: rgba(0, 0, 0, .15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mat-table {
+  overflow: auto;
+  max-height: 600px;
+}
+
+.action-column {
+  flex: 0 0 120px;
+}
+
+.action-column-header {
+  flex: 0 0 105px;
+}

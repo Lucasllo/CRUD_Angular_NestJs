@@ -1,0 +1,103 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Cadastro</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <mat-form-field class="full-width">
+        <mat-label>Nome</mat-label>
+        <input matInput formControlName="name" #name>
+        @if (form.get('name')?.invalid) {
+        <mat-error>
+          {{getErrorMessage('name')}}
+        </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Sobrenome</mat-label>
+        <input matInput formControlName="lastName">
+        @if (form.get('lastName')?.invalid) {
+        <mat-error>
+          {{getErrorMessage('lastName')}}
+        </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Data de Nascimento</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="dateBirth">
+        <mat-hint>DD/MM/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        @if (form.get('dateBirth')?.invalid) {
+        <mat-error>
+          {{getErrorMessage('dateBirth')}}
+        </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Gênero</mat-label>
+        <mat-select formControlName="gender">
+          @for (gender of genders; track gender) {
+          <mat-option [value]="gender">{{gender}}</mat-option>
+          }
+        </mat-select>
+        @if (form.get('gender')?.invalid) {
+        <mat-error>
+          {{getErrorMessage('gender')}}
+        </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" type="email">
+        @if (form.get('email')?.invalid) {
+        <mat-error>
+          {{getErrorMessage('email')}}
+        </mat-error>
+        }
+      </mat-form-field>
+
+      <div formGroupName="passwords">
+        <mat-form-field class="full-width">
+          <mat-label>Senha</mat-label>
+          <input matInput formControlName="password" type="password">
+          @if (form.get('password')?.invalid) {
+          <mat-error>
+            {{getErrorMessage('password')}}
+          </mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Confirmar senha</mat-label>
+          <input matInput formControlName="confirmPassword" type="password">
+          @if (form.get('confirmPassword')?.invalid) {
+          <mat-error>
+            {{getErrorMessage('confirmPassword')}}
+          </mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <div class="full-width">
+        <mat-checkbox formControlName="agree">Concordar em receber emails informativos.</mat-checkbox>
+        @if (form.get('agree')?.invalid) {
+        <mat-error>
+          {{getErrorMessage('agree')}}
+        </mat-error>
+        }
+      </div>
+
+      <mat-card-actions>
+        <button mat-raised-button type="submit">SALVAR</button>
+        <button mat-raised-button type="button" (click)="onCancel()">CANCELAR</button>
+      </mat-card-actions>
+    </form>
+  </mat-card-content>
+
+</mat-card>

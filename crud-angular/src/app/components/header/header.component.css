@@ -1,0 +1,26 @@
+.header {
+  background-color: #d7e3ff;
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+}
+
+mat-icon,
+.login_button_text,
+.button {
+  color: #005cbb
+}
+
+.login_button {
+  background-color: #c1d5f8;
+}
+
+.login_button:hover {
+  background-color: #c6d8fa;
+}
+
+.button {
+  padding: 15px;
+  color: #005cbb;
+  cursor: pointer;
+}

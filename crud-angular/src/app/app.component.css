@@ -1,0 +1,14 @@
+.header {
+  background-color: #607d8b;
+  color: white;
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 3;
+}

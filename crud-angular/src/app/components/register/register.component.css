@@ -1,0 +1,41 @@
+mat-card {
+  width: 80%;
+  max-width: 510px;
+  margin: 2em auto;
+  text-align: center;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  gap: 25px;
+}
+
+mat-card-header {
+  display: flex;
+  justify-content: center;
+}
+
+mat-card-title {
+  font-weight: 500;
+  padding-bottom: 16px;
+}
+
+
+.full-width {
+  width: 100%;
+}
+
+.min-width {
+  width: 100%;
+  min-width: 150px;
+}
+
+.align-text {
+  text-align: center;
+}
+
+.form-array-error {
+  text-align: left;
+}

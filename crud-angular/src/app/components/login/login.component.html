@@ -1,0 +1,41 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Login</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+      <mat-form-field class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" type="email">
+        <mat-icon matSuffix>mail</mat-icon>
+        @if (form.get('email')?.invalid) {
+        <mat-error>
+          {{getErrorMessage('email')}}
+        </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Senha</mat-label>
+        <input matInput formControlName="senha" type="password">
+        <mat-icon matSuffix>lock</mat-icon>
+        @if (form.get('senha')?.invalid) {
+        <mat-error>
+          {{getErrorMessage('senha')}}
+        </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-card-actions>
+        <button mat-raised-button type="submit">LOGAR</button>
+      </mat-card-actions>
+
+      <div class="register_container">
+        Ainda não tem conta? Crie agora <span class="register_container_link" routerLink="/register">aqui</span>
+      </div>
+
+    </form>
+  </mat-card-content>
+
+</mat-card>
