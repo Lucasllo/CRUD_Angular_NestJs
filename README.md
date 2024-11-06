@@ -22,8 +22,7 @@ This project is a basic CRUD using [Angular CLI](https://github.com/angular/angu
 - ✅ Sqlite database (you can use any database of your preference)
 - ✅ Controller, Service, and Repository layers
 - ✅ DTO (Data Transfer Object)
-- ✅ Docs - Swagger (https://springdoc.org/v2/)
-
+- ✅ Docs - [Swagger](https://swagger.io/docs/) 
 ## ❗️Executing the code locally
 
 You need to have Node.js / NPM installed locally.
