@@ -1,10 +1,16 @@
 <mat-toolbar class="header">
   <span class="button" routerLink="">CRUD</span>
   @if (isLogado()) {
-    <button class="login_button" mat-button (click)="logout()" type="button">
-      <span class="login_button_text">Logout</span>
-      <mat-icon>logout</mat-icon>
-    </button>
+    <div class="nav">
+      <button class="login_button" mat-button routerLink="/" type="button">
+        <span class="login_button_text">Lista</span>
+        <mat-icon>list</mat-icon>
+      </button>
+      <button class="login_button" mat-button (click)="logout()" type="button">
+        <span class="login_button_text">Logout</span>
+        <mat-icon>logout</mat-icon>
+      </button>
+    </div>
   }@else {
     <button class="login_button" mat-button routerLink="login"  type="button">
       <span class="login_button_text">Login</span>

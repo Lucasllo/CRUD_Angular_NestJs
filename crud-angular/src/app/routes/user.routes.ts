@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { CoursesComponent } from '../components/courses/courses.component';
 import { CourseFormComponent } from '../components/course-form/course-form.component';
 import { resolveUserCourse } from '../guards/user-course.resolver';
+import { CoursesViewComponent } from '../components/courses-view/courses-view.component';
 
 // export const canLeaveEditPage: CanDeactivateFn<TaskFormComponent> = (component) => {
 //   if (component.submitted) {
@@ -39,6 +40,13 @@ export const routes: Routes = [
           course: resolveUserCourse,
         },
         runGuardsAndResolvers: 'always'
+      },
+      {
+        path: 'courses/course/player/:idCourse',
+        component: CoursesViewComponent,
+        resolve: {
+          course: resolveUserCourse,
+        },
       },
     ],
   },

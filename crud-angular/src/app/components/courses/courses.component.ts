@@ -71,4 +71,10 @@ export class CoursesComponent implements OnInit {
   onDelete(course: Course) {
     this.coursesService.deleteCourse(course.id);
   }
+
+  player(course: Course){
+    this.router.navigate(['./course/player', course.id], {
+      relativeTo: this.activatedRoute,
+    });
+  }
 }

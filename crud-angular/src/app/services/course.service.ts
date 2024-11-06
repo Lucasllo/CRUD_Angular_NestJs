@@ -16,21 +16,21 @@ export class CoursesService {
       id: '1',
       category: 'testando',
       name: 'teste demo',
-      lessons: [{ id: '1', name: 'demo', youtubeUrl: 'llllllllll' }],
+      lessons: [{ id: '1', name: 'demo', youtubeUrl: 'm3lF2qEA2cw' }],
     },
     {
       id: '2',
       category: 'testando',
       name: 'teste demo 2',
-      lessons: [{ id: '1', name: 'demo 2', youtubeUrl: 'llllllllll' }],
+      lessons: [{ id: '1', name: 'demo 2', youtubeUrl: '7hHZnvjCbVw' }],
     },
     {
       id: '3',
       category: 'testando',
       name: 'tarefa demo',
       lessons: [
-        { id: '1', name: 'demo ', youtubeUrl: 'iiiiiiiiiii' },
-        { id: '2', name: 'demo 2', youtubeUrl: 'oooooooooo' },
+        { id: '1', name: 'demo ', youtubeUrl: 'm3lF2qEA2cw' },
+        { id: '2', name: 'demo 2', youtubeUrl: '7hHZnvjCbVw' },
       ],
     },
   ]

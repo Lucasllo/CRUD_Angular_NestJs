@@ -1,3 +1,4 @@
+import { CoursesViewComponent } from './components/courses-view/courses-view.component';
 import { CanMatchFn, RedirectCommand, Router, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { resolveUserName } from './guards/user.resolver';
@@ -76,6 +77,17 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./components/course-form/course-form.component').then(
         (mod) => mod.CourseFormComponent
+      ),
+    resolve: {
+      course: resolveCourse,
+    },
+  },
+  {
+    title: 'Visualizar Videos',
+    path: 'home/course/player/:idCourse',
+    loadComponent: () =>
+      import('./components/courses-view/courses-view.component').then(
+        (mod) => mod.CoursesViewComponent
       ),
     resolve: {
       course: resolveCourse,
