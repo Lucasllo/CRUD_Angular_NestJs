@@ -28,3 +28,11 @@ mat-card-actions {
 .form-array-error {
   text-align: left;
 }
+
+.lessons-toolbar {
+  background: #E8EAF6;
+  height: 50px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-weight: 500;
+}

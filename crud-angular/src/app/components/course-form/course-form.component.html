@@ -26,7 +26,7 @@
         }
       </mat-form-field>
 
-      <mat-toolbar class="full-width">
+      <mat-toolbar class="full-width lessons-toolbar">
         <span>Aulas</span>
         <button mat-icon-button color="accent" aria-label="Adicionar aula" type="button" (click)="addLesson()">
           <mat-icon>add</mat-icon>
@@ -40,8 +40,8 @@
 
       <table formArrayName="lessons" class="full-width">
         @for (lesson of getLessonsFormArray(); track $index; let i = $index) {
-        <tr style="display: flex; flex-direction: column;" [formGroupName]="i">
-          <td>
+        <tr [formGroupName]="i">
+          <td style="width: 65%">
             <mat-form-field class="full-width">
               <mat-label>Nome da Aula</mat-label>
               <input matInput formControlName="name" />
@@ -52,7 +52,7 @@
               }
             </mat-form-field>
           </td>
-          <td>
+          <td  style="width: 30%">
             <mat-form-field class="full-width">
               <mat-label>URL</mat-label>
               <span matTextPrefix>https://youtu.be/</span>
