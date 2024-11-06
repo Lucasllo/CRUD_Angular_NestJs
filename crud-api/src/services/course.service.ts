@@ -11,7 +11,7 @@ export class CourseService {
       category: 'testando',
       name: 'teste usuario 2',
       lessons: [
-        { id: 1, name: 'testar', youtubeUrl: 'zzzzzzzzzz', courseId: 1 },
+        { id: 1, name: 'testar', youtubeUrl: 'OBmlCZTF4Xs', courseId: 1 },
       ],
       userId: 2,
     },
@@ -23,7 +23,7 @@ export class CourseService {
         {
           id: 2,
           name: 'testar novamente',
-          youtubeUrl: 'aaaaaaaaaaa',
+          youtubeUrl: '7hHZnvjCbVw',
           courseId: 2,
         },
       ],
@@ -34,8 +34,8 @@ export class CourseService {
       category: 'testando',
       name: 'nova tarefa usuario 2',
       lessons: [
-        { id: 3, name: 'testar ', youtubeUrl: 'zzzzzzzzzz', courseId: 3 },
-        { id: 4, name: 'testar 2', youtubeUrl: 'aaaaaaaaaa', courseId: 3 },
+        { id: 3, name: 'testar ', youtubeUrl: 'm3lF2qEA2cw', courseId: 3 },
+        { id: 4, name: 'testar 2', youtubeUrl: '7hHZnvjCbVw', courseId: 3 },
       ],
       userId: 2,
     },
@@ -47,7 +47,7 @@ export class CourseService {
         {
           id: 5,
           name: 'testar novamente',
-          youtubeUrl: 'aaaaaaaaaaa',
+          youtubeUrl: '7hHZnvjCbVw',
           courseId: 4,
         },
       ],
@@ -57,7 +57,7 @@ export class CourseService {
       id: 5,
       category: 'testando',
       name: 'teste demo usuario',
-      lessons: [{ id: 6, name: 'demo', youtubeUrl: 'llllllllll', courseId: 5 }],
+      lessons: [{ id: 6, name: 'demo', youtubeUrl: 'm3lF2qEA2cw', courseId: 5 }],
       userId: 1,
     },
     {
@@ -65,7 +65,7 @@ export class CourseService {
       category: 'testando',
       name: 'teste demo 2 usuario',
       lessons: [
-        { id: 7, name: 'demo 2', youtubeUrl: 'llllllllll', courseId: 6 },
+        { id: 7, name: 'demo 2', youtubeUrl: 'OBmlCZTF4Xs', courseId: 6 },
       ],
       userId: 1,
     },
@@ -74,8 +74,8 @@ export class CourseService {
       category: 'testando',
       name: 'tarefa demo usuario',
       lessons: [
-        { id: 8, name: 'demo ', youtubeUrl: 'iiiiiiiiiii', courseId: 7 },
-        { id: 9, name: 'demo 2', youtubeUrl: 'oooooooooo', courseId: 7 },
+        { id: 8, name: 'demo ', youtubeUrl: '7hHZnvjCbVw', courseId: 7 },
+        { id: 9, name: 'demo 2', youtubeUrl: 'OBmlCZTF4Xs', courseId: 7 },
       ],
       userId: 1,
     },
