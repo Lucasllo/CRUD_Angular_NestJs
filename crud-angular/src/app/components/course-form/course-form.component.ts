@@ -1,4 +1,4 @@
-import { Component, OnInit, computed, inject, input } from '@angular/core';
+import { Component, OnInit, computed, inject, input, signal } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -29,8 +29,10 @@ import { Lesson } from '../../models/lesson';
 import { Location } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelect } from '@angular/material/select';
-import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatButton, MatButtonModule, MatIconButton } from '@angular/material/button';
 import { Course } from '../../models/course';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-login',
@@ -50,9 +52,10 @@ import { Course } from '../../models/course';
     MatInputModule,
     MatFormFieldModule,
     MatSelect,
-    MatButton,
+    MatButtonModule,
     MatIconButton,
     RouterLink,
+    MatIcon
   ],
   templateUrl: './course-form.component.html',
   styleUrl: './course-form.component.css',
@@ -61,6 +64,7 @@ export class CourseFormComponent implements OnInit {
   form!: FormGroup;
   course = input.required<Course>();
   submitted = false;
+  categories = signal<string[]>([]);
 
   private readonly formBuilder = inject(NonNullableFormBuilder);
   private readonly snackBar = inject(MatSnackBar);
@@ -68,8 +72,11 @@ export class CourseFormComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly coursesService = inject(CoursesService);
   private readonly router = inject(Router);
+  readonly dialog = inject(MatDialog);
 
   ngOnInit(): void {
+    this.categories.set(['Front-end', 'Back-end']);
+
     this.createForm();
   }
 
@@ -225,5 +232,18 @@ export class CourseFormComponent implements OnInit {
   isFormArrayRequired() {
     const lessons = this.form.get('lessons') as UntypedFormArray;
     return !lessons.valid && lessons.hasError('required') && lessons.touched;
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: {header: 'Nova Categoria', text: 'Informe qual nome da categoria', data: ''},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== undefined) {
+        this.form.get('category')?.setValue(result);
+        this.categories.update((oldCategories)=> [...oldCategories, result])
+      }
+    });
   }
 }

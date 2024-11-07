@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { User } from '../models/user';
 import { catchError, map, Observable, of, tap, throwError } from 'rxjs';
-import { Gender } from '../enum/gender.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +18,7 @@ export class UserService {
       email: 'lucasteste@mailinator.com',
       dateBirth: new Date('10/10/1995'),
       password: 'Asdf@1234',
-      gender: Gender.MASC,
+      gender: 'Masculino',
       agree: true,
     },
     {
@@ -29,7 +28,7 @@ export class UserService {
       email: 'davidteste@mailinator.com',
       dateBirth: new Date('11/11/1990'),
       password: 'testee',
-      gender: Gender.MASC,
+      gender: 'Masculino',
       agree: true,
     },
   ]);

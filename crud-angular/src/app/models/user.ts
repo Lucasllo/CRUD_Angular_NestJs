@@ -1,5 +1,3 @@
-import { Gender } from '../enum/gender.enum';
-
 export interface User {
   id?: number;
   name: string;
@@ -7,6 +5,6 @@ export interface User {
   dateBirth: Date;
   email: string;
   password: string;
-  gender: Gender;
+  gender: string;
   agree: boolean;
 }

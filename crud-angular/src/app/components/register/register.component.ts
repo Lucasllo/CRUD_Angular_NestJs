@@ -28,7 +28,6 @@ import {
 import { MatIcon } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatToolbar } from '@angular/material/toolbar';
-import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -37,7 +36,6 @@ import { MatCheckbox } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user';
-import { Gender } from '../../enum/gender.enum';
 
 function equalValues(controlName1: string, controlName2: string) {
   return (control: AbstractControl) => {
@@ -83,7 +81,7 @@ export class RegisterComponent implements OnInit {
     name: FormControl<string | null>;
     lastName: FormControl<string | null>;
     dateBirth: FormControl<Date | null>;
-    gender: FormControl<Gender | null>;
+    gender: FormControl<string | null>;
     email: FormControl<string | null>;
     passwords: FormGroup<{
       password: FormControl<any>;
@@ -96,7 +94,7 @@ export class RegisterComponent implements OnInit {
     lastName: '',
     email: '',
     dateBirth: new Date(),
-    gender: Gender.INIT,
+    gender: '',
     password: '',
     agree: false,
   };
@@ -136,7 +134,7 @@ export class RegisterComponent implements OnInit {
       dateBirth: new FormControl(this.user.dateBirth, {
         validators: [Validators.required],
       }),
-      gender: new FormControl<Gender>(this.user.gender, {
+      gender: new FormControl<string>(this.user.gender, {
         validators: Validators.required,
       }),
       email: new FormControl(this.user.email, {
