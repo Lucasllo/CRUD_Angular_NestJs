@@ -36,6 +36,7 @@ import { MatCheckbox } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user';
+import { ActivatedRoute } from '@angular/router';
 
 function equalValues(controlName1: string, controlName2: string) {
   return (control: AbstractControl) => {
