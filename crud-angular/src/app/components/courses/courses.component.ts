@@ -18,6 +18,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CoursesService } from '../../services/course.service';
 import { Course } from '../../models/course';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-courses',
@@ -44,16 +45,16 @@ import { Course } from '../../models/course';
 })
 export class CoursesComponent implements OnInit {
   private readonly coursesService = inject(CoursesService);
-  userCourses = input<Course[]>([]);
+  private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly snackBar = inject(MatSnackBar);
   courses =  this.coursesService.allCourses;
   displayedColumns: string[] = ['name', 'category', 'addCourse'];
   private readonly router = inject(Router);
-  private readonly activatedRoute = inject(ActivatedRoute);
 
   ngOnInit(): void {
-    if (this.router.url.includes('/user/courses')) {
-      this.coursesService.setCourses(this.userCourses);
-    }else if(!localStorage.getItem('coursesDemo') || this.router.url.includes('/home')){
+    if (this.router.url.includes('/home')) {
+      this.coursesService.getAllCourses();
+    }else if(!localStorage.getItem('coursesDemo')){
       this.coursesService.resetCourses();
     }
   }
@@ -69,7 +70,24 @@ export class CoursesComponent implements OnInit {
   }
 
   onDelete(course: Course) {
-    this.coursesService.deleteCourse(course.id);
+    this.coursesService.deleteCourse(course.id).subscribe({
+      next: (data) => console.log(data),
+      error: (err) => {this.onError(), console.log(err)},
+      complete: () => this.onComplete()
+    });
+  }
+
+  onComplete(){
+    this.router.navigate(['./'], {
+      relativeTo: this.activatedRoute,
+      onSameUrlNavigation: 'reload',
+    })
+  }
+
+  onError() {
+    this.snackBar.open('Erro ao excluir curso!', undefined, {
+      duration: 5000,
+    });
   }
 
   player(course: Course){

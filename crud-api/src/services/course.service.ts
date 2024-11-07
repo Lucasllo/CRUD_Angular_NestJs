@@ -143,6 +143,9 @@ export class CourseService {
   }
 
   remove(id: number) {
-    return `This action removes a #${id} task`;
+    let course = this.courses.find((course) => course.id == id);
+    this.courses = this.courses.filter((course) => course.id !== id);
+
+    return course;
   }
 }

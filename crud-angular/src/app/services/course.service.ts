@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, InputSignal, inject, signal } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, tap } from 'rxjs';
 import { UserService } from './user.service';
 import { Course } from '../models/course';
 import { Router } from '@angular/router';
@@ -157,7 +157,7 @@ export class CoursesService {
     return this.httpClient.get<Course[]>(
       `http://localhost:3000/course/coursesByUser`,
       { headers: headers }
-    );
+    ).pipe(tap({next: (data) => this.demoCourses.set(data)}));
   }
 
   create(course: Course): Observable<Course> {
@@ -226,17 +226,18 @@ export class CoursesService {
 
   deleteCourse(id: string){
     if (this.router.url.includes('/user/courses')) {
-      this.delete(id);
+      return this.delete(id);
     }else{
-      this.deleteDemo(id);
+      return this.deleteDemo(id);
     }
   }
 
-  deleteDemo(id: string): void {
+  deleteDemo(id: string) {
     let coursesDemo = localStorage.getItem('coursesDemo');
+    let course = null;
     if (coursesDemo) {
       let courses: Course[] = JSON.parse(coursesDemo);
-
+      course = courses.find((course) => course.id == id);
       const newCourses = courses.filter((course) => course.id !== id);
 
       localStorage.setItem('coursesDemo', JSON.stringify(newCourses));
@@ -244,11 +245,18 @@ export class CoursesService {
       this.demoCourses.update((oldCourses) => oldCourses.filter((course) => course.id !== id));
       console.log(this.demoCourses());
     }
+    return of(course);
   }
 
-  delete(id: string): void {
-    this.courses.update((prevCourses) =>
-      prevCourses.filter((course) => course.id !== id)
+  delete(id: string): Observable<Course>  {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    });
+    return this.httpClient.delete<Course>(
+      `http://localhost:3000/course/` + id,
+      {
+        headers: headers,
+      }
     );
   }
 }
