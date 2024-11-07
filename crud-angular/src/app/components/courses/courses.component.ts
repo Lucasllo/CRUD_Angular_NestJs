@@ -53,7 +53,7 @@ export class CoursesComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.router.url.includes('/home')) {
-      this.coursesService.getAllCourses();
+      this.coursesService.initCourses();
     }else if(!localStorage.getItem('coursesDemo')){
       this.coursesService.resetCourses();
     }

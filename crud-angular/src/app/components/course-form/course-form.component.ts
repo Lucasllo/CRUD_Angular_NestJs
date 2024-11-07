@@ -61,22 +61,21 @@ import { DialogComponent } from '../dialog/dialog.component';
   styleUrl: './course-form.component.css',
 })
 export class CourseFormComponent implements OnInit {
-  form!: FormGroup;
-  course = input.required<Course>();
-  submitted = false;
-  categories = signal<string[]>([]);
-
+  private readonly coursesService = inject(CoursesService);
   private readonly formBuilder = inject(NonNullableFormBuilder);
   private readonly snackBar = inject(MatSnackBar);
   private readonly location = inject(Location);
   private readonly route = inject(ActivatedRoute);
-  private readonly coursesService = inject(CoursesService);
   private readonly router = inject(Router);
   readonly dialog = inject(MatDialog);
 
-  ngOnInit(): void {
-    this.categories.set(['Front-end', 'Back-end']);
+  form!: FormGroup;
+  course = input.required<Course>();
+  submitted = false;
+  categories = this.coursesService.allCategories;
 
+
+  async ngOnInit() {
     this.createForm();
   }
 
@@ -242,7 +241,7 @@ export class CourseFormComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
         this.form.get('category')?.setValue(result);
-        this.categories.update((oldCategories)=> [...oldCategories, result])
+        this.coursesService.updateCategories(result);
       }
     });
   }

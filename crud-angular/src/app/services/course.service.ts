@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 export class CoursesService {
   private readonly httpClient = inject(HttpClient);
   private readonly router = inject(Router);
-  private initialValues = [
+  private readonly initialCourses = [
     {
       id: '1',
       category: 'testando',
@@ -33,86 +33,52 @@ export class CoursesService {
         { id: '2', name: 'demo 2', youtubeUrl: '7hHZnvjCbVw' },
       ],
     },
-  ]
-  private readonly demoCourses = signal<Course[]>([]);
+  ];
+  private readonly initialCategories = ['Front-end', 'Back-end'];
 
-  private readonly courses = signal<Course[]>([
-    {
-      id: '1',
-      category: 'testando',
-      name: 'teste',
-      lessons: [{ id: '1', name: 'testar', youtubeUrl: 'zzzzzzzzzz' }],
-    },
-    {
-      id: '2',
-      category: 'testando',
-      name: 'teste 2',
-      lessons: [
-        { id: '1', name: 'testar novamente', youtubeUrl: 'aaaaaaaaaaa' },
-      ],
-    },
-    {
-      id: '3',
-      category: 'testando',
-      name: 'nova tarefa',
-      lessons: [
-        { id: '1', name: 'testar ', youtubeUrl: 'zzzzzzzzzz' },
-        { id: '2', name: 'testar 2', youtubeUrl: 'aaaaaaaaaa' },
-      ],
-    },
-    {
-      id: '4',
-      category: 'testando',
-      name: 'nova tarefa 2',
-      lessons: [
-        { id: '1', name: 'testar novamente', youtubeUrl: 'aaaaaaaaaaa' },
-      ],
-    },
-    {
-      id: '5',
-      category: 'testando',
-      name: 'teste demo',
-      lessons: [{ id: '1', name: 'demo', youtubeUrl: 'llllllllll' }],
-    },
-    {
-      id: '6',
-      category: 'testando',
-      name: 'teste demo 2',
-      lessons: [{ id: '1', name: 'demo 2', youtubeUrl: 'llllllllll' }],
-    },
-    {
-      id: '7',
-      category: 'testando',
-      name: 'tarefa demo',
-      lessons: [
-        { id: '1', name: 'demo ', youtubeUrl: 'iiiiiiiiiii' },
-        { id: '2', name: 'demo 2', youtubeUrl: 'oooooooooo' },
-      ],
-    },
-  ]);
+  private readonly categories = signal<string[]>([]);
+  private readonly courses = signal<Course[]>([]);
 
-  allCourses = this.demoCourses.asReadonly();
+  allCourses = this.courses.asReadonly();
+  allCategories = this.categories.asReadonly();
 
   constructor() {
-    this.getAllCourses();
+    this.initCourses();
   }
 
-  getAllCourses() {
-    this.resetCourses();
+  initCourses() {
     let coursesDemo = localStorage.getItem('coursesDemo');
     if (coursesDemo) {
-      this.demoCourses.set(JSON.parse(coursesDemo));
+      this.courses.set(JSON.parse(coursesDemo));
     } else {
-      localStorage.setItem('coursesDemo', JSON.stringify(this.demoCourses()));
+      this.resetCourses();
+      localStorage.setItem('coursesDemo', JSON.stringify(this.courses()));
+    }
+    
+    let categoriesDemo = localStorage.getItem('categoriesDemo');
+    if (categoriesDemo) {
+      console.log('categoria aqui')
+      this.categories.set(JSON.parse(categoriesDemo));
+    } else {
+      this.resetCategories();
+      localStorage.setItem('categoriesDemo', JSON.stringify(this.categories()));
     }
   }
 
   setCourses(courses: InputSignal<Course[]>){
-    this.demoCourses.set(courses());
+    this.courses.set(courses());
   }
 
   resetCourses(){
-    this.demoCourses.set(this.initialValues);
+    this.courses.set(this.initialCourses);
+  }
+
+  resetCategories(){
+    this.categories.set(this.initialCategories);
+  }
+
+  updateCategories(value: string){
+    this.categories.update((oldCategories)=> [...oldCategories, value])
   }
 
   save(course: Course): Observable<Course> {
@@ -132,7 +98,7 @@ export class CoursesService {
   }
 
   loadById(id: string): Observable<Course> {
-    const course = this.demoCourses().find((t) => t.id == id);
+    const course = this.courses().find((t) => t.id == id);
     if (course) {
       return of(course);
     }
@@ -157,7 +123,7 @@ export class CoursesService {
     return this.httpClient.get<Course[]>(
       `http://localhost:3000/course/coursesByUser`,
       { headers: headers }
-    ).pipe(tap({next: (data) => this.demoCourses.set(data)}));
+    ).pipe(tap({next: (data) => this.courses.set(data)}));
   }
 
   create(course: Course): Observable<Course> {
@@ -202,10 +168,19 @@ export class CoursesService {
 
       courses.push(newCourse);
       localStorage.setItem('coursesDemo', JSON.stringify(courses));
-      this.demoCourses.set(courses);
+      this.courses.set(courses);
     }
-
+    this.setCategoriesDemo(course);
     return of(newCourse);
+  }
+
+  private setCategoriesDemo(course: Course){
+    let categoriesDemo = localStorage.getItem('categoriesDemo')
+    if(categoriesDemo){
+      if(!(JSON.parse(categoriesDemo) as Array<string>).includes(course.category)){
+        localStorage.setItem('categoriesDemo', JSON.stringify(this.categories()));
+      }
+    }
   }
 
   updateDemo(courseUpdated: Course): Observable<Course> {
@@ -218,8 +193,9 @@ export class CoursesService {
       );
 
       localStorage.setItem('coursesDemo', JSON.stringify(newCourses));
-      this.demoCourses.set(newCourses);
+      this.courses.set(newCourses);
     }
+    this.setCategoriesDemo(courseUpdated);
 
     return of(courseUpdated);
   }
@@ -242,8 +218,8 @@ export class CoursesService {
 
       localStorage.setItem('coursesDemo', JSON.stringify(newCourses));
 
-      this.demoCourses.update((oldCourses) => oldCourses.filter((course) => course.id !== id));
-      console.log(this.demoCourses());
+      this.courses.update((oldCourses) => oldCourses.filter((course) => course.id !== id));
+      console.log(this.courses());
     }
     return of(course);
   }
