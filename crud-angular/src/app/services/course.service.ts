@@ -126,6 +126,16 @@ export class CoursesService {
     ).pipe(tap({next: (data) => this.courses.set(data)}));
   }
 
+  loadCategoriesByUserId(): void{
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    });
+    this.httpClient.get<{userId: number, values: string[]}>(
+      `http://localhost:3000/course/coursesCategoryByUser`,
+      { headers: headers }
+    ).subscribe({next: (data) => {this.categories.set(data.values)}, error: (err) => console.log(err)});
+  }
+
   create(course: Course): Observable<Course> {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${localStorage.getItem('token')}`,

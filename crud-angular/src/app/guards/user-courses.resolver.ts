@@ -17,6 +17,7 @@ export const resolveUserCourses: ResolveFn<Course[]> = async (
 
   if (localStorage.getItem('token')) {
     courses = await firstValueFrom(coursesService.loadByUserId());
+    coursesService.loadCategoriesByUserId();
   }
 
   return courses;

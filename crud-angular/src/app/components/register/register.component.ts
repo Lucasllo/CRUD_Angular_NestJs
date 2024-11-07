@@ -162,7 +162,6 @@ export class RegisterComponent implements OnInit {
 
   onSubmit() {
     if (this.form.valid) {
-      console.log(this.form.controls.agree);
       let user: User = {
         name: this.form.controls.name.value!,
         lastName: this.form.controls.lastName.value!,
@@ -172,7 +171,6 @@ export class RegisterComponent implements OnInit {
         gender: this.form.controls.gender.value!,
         password: this.form.controls.passwords.controls.password.value!,
       };
-      console.log(user);
 
       this.userService.save(user).subscribe({
         error: (error) => {

@@ -81,6 +81,8 @@ export class CourseService {
     },
   ];
 
+  categories: {userId: number, values: string[]}[] = [{userId: 1, values:['Front-end', 'Back-end']}, {userId: 2, values:['Front-end', 'Back-end']}];
+
   create(createCourseDto: CreateCourseDto, userId: number) {
     const idCourse = Math.random() * 100;
     const newLessons: LessonEntity[] = [];
@@ -99,7 +101,7 @@ export class CourseService {
       userId: userId,
       lessons: newLessons,
     };
-
+    this.categories.push({userId: userId, values: ['Front-end', 'Back-end']})
     this.courses.push(newCourse);
     console.log(this.courses);
     return CreateCourseDto;
@@ -111,6 +113,10 @@ export class CourseService {
 
   findAllByUser(id: number) {
     return this.courses.filter((t) => t.userId == id);
+  }
+
+  findAllCategoryByUser(id: number) {
+    return this.categories.find((t) => t.userId == id);
   }
 
   findOne(id: number) {
@@ -138,6 +144,11 @@ export class CourseService {
     );
 
     this.courses = newCourses;
+    let categoriesUser = this.categories.find((c) => c.userId == userId);
+    if(!categoriesUser.values.includes(updateCourseDto.category)){
+      categoriesUser.values.push(updateCourseDto.category);
+      this.categories.forEach((c) => c.userId == categoriesUser.userId ? {...categoriesUser, values: [...categoriesUser.values]} : c)
+    }
 
     return updateCourseDto;
   }

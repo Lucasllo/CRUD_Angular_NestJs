@@ -29,6 +29,11 @@ export class CourseController {
     return this.courseService.findAllByUser(user.id);
   }
 
+  @Get('coursesCategoryByUser')
+  coursesCategoryByUser(@User() user: UserEntity) {
+    return this.courseService.findAllCategoryByUser(user.id);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.courseService.findOne(+id);
