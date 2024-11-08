@@ -7,10 +7,10 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { CourseEntity } from './course.entity';
+import { PlaylistEntity } from './course.entity';
 
 @Entity({ name: 'lesson' })
-export class LessonEntity {
+export class VideoEntity {
   @PrimaryGeneratedColumn({
     unsigned: true,
   })
@@ -33,9 +33,9 @@ export class LessonEntity {
   updatedAt?: Date;
 
   @Column({ name: 'courseId' })
-  courseId: number;
+  playlistId: number;
 
-  @ManyToOne(() => CourseEntity, (course) => course.lessons)
+  @ManyToOne(() => PlaylistEntity, (playlist) => playlist.videos)
   @JoinColumn({ name: 'courseId' })
-  course?: CourseEntity;
+  playlist?: PlaylistEntity;
 }

@@ -20,5 +20,5 @@ import { HeaderComponent } from './components/header/header.component';
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  title = 'CRUD';
+  title = 'Playlists';
 }

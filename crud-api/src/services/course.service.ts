@@ -1,17 +1,17 @@
 import { Injectable } from '@nestjs/common';
-import { CreateCourseDto } from '../dtos/course/create-course.dto';
-import { CourseEntity } from 'src/entities/course.entity';
-import { LessonEntity } from 'src/entities/lesson.entity';
+import { CreatePlaylistDto } from '../dtos/course/create-course.dto';
+import { PlaylistEntity } from 'src/entities/course.entity';
+import { VideoEntity } from 'src/entities/lesson.entity';
 
 @Injectable()
-export class CourseService {
-  courses: CourseEntity[] = [
+export class PlaylistService {
+  playlists: PlaylistEntity[] = [
     {
       id: 1,
       category: 'testando',
       name: 'teste usuario 2',
-      lessons: [
-        { id: 1, name: 'testar', youtubeUrl: 'OBmlCZTF4Xs', courseId: 1 },
+      videos: [
+        { id: 1, name: 'testar', youtubeUrl: 'OBmlCZTF4Xs', playlistId: 1 },
       ],
       userId: 2,
     },
@@ -19,12 +19,12 @@ export class CourseService {
       id: 2,
       category: 'testando',
       name: 'teste 2 usuario 2',
-      lessons: [
+      videos: [
         {
           id: 2,
           name: 'testar novamente',
           youtubeUrl: '7hHZnvjCbVw',
-          courseId: 2,
+          playlistId: 2,
         },
       ],
       userId: 2,
@@ -33,9 +33,9 @@ export class CourseService {
       id: 3,
       category: 'testando',
       name: 'nova tarefa usuario 2',
-      lessons: [
-        { id: 3, name: 'testar ', youtubeUrl: 'm3lF2qEA2cw', courseId: 3 },
-        { id: 4, name: 'testar 2', youtubeUrl: '7hHZnvjCbVw', courseId: 3 },
+      videos: [
+        { id: 3, name: 'testar ', youtubeUrl: 'm3lF2qEA2cw', playlistId: 3 },
+        { id: 4, name: 'testar 2', youtubeUrl: '7hHZnvjCbVw', playlistId: 3 },
       ],
       userId: 2,
     },
@@ -43,12 +43,12 @@ export class CourseService {
       id: 4,
       category: 'testando',
       name: 'nova tarefa usuario',
-      lessons: [
+      videos: [
         {
           id: 5,
           name: 'testar novamente',
           youtubeUrl: '7hHZnvjCbVw',
-          courseId: 4,
+          playlistId: 4,
         },
       ],
       userId: 1,
@@ -57,15 +57,15 @@ export class CourseService {
       id: 5,
       category: 'testando',
       name: 'teste demo usuario',
-      lessons: [{ id: 6, name: 'demo', youtubeUrl: 'm3lF2qEA2cw', courseId: 5 }],
+      videos: [{ id: 6, name: 'demo', youtubeUrl: 'm3lF2qEA2cw', playlistId: 5 }],
       userId: 1,
     },
     {
       id: 6,
       category: 'testando',
       name: 'teste demo 2 usuario',
-      lessons: [
-        { id: 7, name: 'demo 2', youtubeUrl: 'OBmlCZTF4Xs', courseId: 6 },
+      videos: [
+        { id: 7, name: 'demo 2', youtubeUrl: 'OBmlCZTF4Xs', playlistId: 6 },
       ],
       userId: 1,
     },
@@ -73,9 +73,9 @@ export class CourseService {
       id: 7,
       category: 'testando',
       name: 'tarefa demo usuario',
-      lessons: [
-        { id: 8, name: 'demo ', youtubeUrl: '7hHZnvjCbVw', courseId: 7 },
-        { id: 9, name: 'demo 2', youtubeUrl: 'OBmlCZTF4Xs', courseId: 7 },
+      videos: [
+        { id: 8, name: 'demo ', youtubeUrl: '7hHZnvjCbVw', playlistId: 7 },
+        { id: 9, name: 'demo 2', youtubeUrl: 'OBmlCZTF4Xs', playlistId: 7 },
       ],
       userId: 1,
     },
@@ -88,8 +88,8 @@ export class CourseService {
       id: 8,
       category: 'testando',
       name: 'teste usuario 2',
-      lessons: [
-        { id: 1, name: 'testar', youtubeUrl: 'OBmlCZTF4Xs', courseId: 1 },
+      videos: [
+        { id: 1, name: 'testar', youtubeUrl: 'OBmlCZTF4Xs', playlistId: 1 },
       ],
       userId: 2,
     },
@@ -97,12 +97,12 @@ export class CourseService {
       id: 9,
       category: 'testando',
       name: 'teste 2 usuario 2',
-      lessons: [
+      videos: [
         {
           id: 2,
           name: 'testar novamente',
           youtubeUrl: '7hHZnvjCbVw',
-          courseId: 2,
+          playlistId: 2,
         },
       ],
       userId: 2,
@@ -111,9 +111,9 @@ export class CourseService {
       id: 10,
       category: 'testando',
       name: 'nova tarefa usuario 2',
-      lessons: [
-        { id: 3, name: 'testar ', youtubeUrl: 'm3lF2qEA2cw', courseId: 3 },
-        { id: 4, name: 'testar 2', youtubeUrl: '7hHZnvjCbVw', courseId: 3 },
+      videos: [
+        { id: 3, name: 'testar ', youtubeUrl: 'm3lF2qEA2cw', playlistId: 3 },
+        { id: 4, name: 'testar 2', youtubeUrl: '7hHZnvjCbVw', playlistId: 3 },
       ],
       userId: 2,
     },
@@ -121,12 +121,12 @@ export class CourseService {
       id: 11,
       category: 'testando',
       name: 'nova tarefa usuario',
-      lessons: [
+      videos: [
         {
           id: 5,
           name: 'testar novamente',
           youtubeUrl: '7hHZnvjCbVw',
-          courseId: 4,
+          playlistId: 4,
         },
       ],
       userId: 1,
@@ -135,15 +135,15 @@ export class CourseService {
       id: 12,
       category: 'testando',
       name: 'teste demo usuario',
-      lessons: [{ id: 6, name: 'demo', youtubeUrl: 'm3lF2qEA2cw', courseId: 5 }],
+      videos: [{ id: 6, name: 'demo', youtubeUrl: 'm3lF2qEA2cw', playlistId: 5 }],
       userId: 1,
     },
     {
       id: 13,
       category: 'testando',
       name: 'teste demo 2 usuario',
-      lessons: [
-        { id: 7, name: 'demo 2', youtubeUrl: 'OBmlCZTF4Xs', courseId: 6 },
+      videos: [
+        { id: 7, name: 'demo 2', youtubeUrl: 'OBmlCZTF4Xs', playlistId: 6 },
       ],
       userId: 1,
     },
@@ -151,9 +151,9 @@ export class CourseService {
       id: 14,
       category: 'testando',
       name: 'tarefa demo usuario',
-      lessons: [
-        { id: 8, name: 'demo ', youtubeUrl: '7hHZnvjCbVw', courseId: 7 },
-        { id: 9, name: 'demo 2', youtubeUrl: 'OBmlCZTF4Xs', courseId: 7 },
+      videos: [
+        { id: 8, name: 'demo ', youtubeUrl: '7hHZnvjCbVw', playlistId: 7 },
+        { id: 9, name: 'demo 2', youtubeUrl: 'OBmlCZTF4Xs', playlistId: 7 },
       ],
       userId: 1,
     },
@@ -169,8 +169,8 @@ export class CourseService {
       id: 15,
       category: 'testando',
       name: 'teste usuario 2',
-      lessons: [
-        { id: 1, name: 'testar', youtubeUrl: 'OBmlCZTF4Xs', courseId: 1 },
+      videos: [
+        { id: 1, name: 'testar', youtubeUrl: 'OBmlCZTF4Xs', playlistId: 1 },
       ],
       userId: 2,
     },
@@ -178,12 +178,12 @@ export class CourseService {
       id: 16,
       category: 'testando',
       name: 'teste 2 usuario 2',
-      lessons: [
+      videos: [
         {
           id: 2,
           name: 'testar novamente',
           youtubeUrl: '7hHZnvjCbVw',
-          courseId: 2,
+          playlistId: 2,
         },
       ],
       userId: 2,
@@ -192,9 +192,9 @@ export class CourseService {
       id: 17,
       category: 'testando',
       name: 'nova tarefa usuario 2',
-      lessons: [
-        { id: 3, name: 'testar ', youtubeUrl: 'm3lF2qEA2cw', courseId: 3 },
-        { id: 4, name: 'testar 2', youtubeUrl: '7hHZnvjCbVw', courseId: 3 },
+      videos: [
+        { id: 3, name: 'testar ', youtubeUrl: 'm3lF2qEA2cw', playlistId: 3 },
+        { id: 4, name: 'testar 2', youtubeUrl: '7hHZnvjCbVw', playlistId: 3 },
       ],
       userId: 2,
     },
@@ -202,12 +202,12 @@ export class CourseService {
       id: 18,
       category: 'testando',
       name: 'nova tarefa usuario',
-      lessons: [
+      videos: [
         {
           id: 5,
           name: 'testar novamente',
           youtubeUrl: '7hHZnvjCbVw',
-          courseId: 4,
+          playlistId: 4,
         },
       ],
       userId: 1,
@@ -216,15 +216,15 @@ export class CourseService {
       id: 19,
       category: 'testando',
       name: 'teste demo usuario',
-      lessons: [{ id: 6, name: 'demo', youtubeUrl: 'm3lF2qEA2cw', courseId: 5 }],
+      videos: [{ id: 6, name: 'demo', youtubeUrl: 'm3lF2qEA2cw', playlistId: 5 }],
       userId: 1,
     },
     {
       id: 20,
       category: 'testando',
       name: 'teste demo 2 usuario',
-      lessons: [
-        { id: 7, name: 'demo 2', youtubeUrl: 'OBmlCZTF4Xs', courseId: 6 },
+      videos: [
+        { id: 7, name: 'demo 2', youtubeUrl: 'OBmlCZTF4Xs', playlistId: 6 },
       ],
       userId: 1,
     },
@@ -232,48 +232,47 @@ export class CourseService {
       id: 21,
       category: 'testando',
       name: 'tarefa demo usuario',
-      lessons: [
-        { id: 8, name: 'demo ', youtubeUrl: '7hHZnvjCbVw', courseId: 7 },
-        { id: 9, name: 'demo 2', youtubeUrl: 'OBmlCZTF4Xs', courseId: 7 },
+      videos: [
+        { id: 8, name: 'demo ', youtubeUrl: '7hHZnvjCbVw', playlistId: 7 },
+        { id: 9, name: 'demo 2', youtubeUrl: 'OBmlCZTF4Xs', playlistId: 7 },
       ],
       userId: 1,
     },
   ];
 
-  categories: {userId: number, values: string[]}[] = [{userId: 1, values:['Front-end', 'Back-end']}, {userId: 2, values:['Front-end', 'Back-end']}];
+  categories: {userId: number, values: string[]}[] = [{userId: 1, values:['Favoritos', 'Pop Music', 'Cursos']}, {userId: 2, values:['Favoritos', 'Pop Music', 'Cursos']}];
 
-  create(createCourseDto: CreateCourseDto, userId: number) {
-    const idCourse = Math.random() * 100;
-    const newLessons: LessonEntity[] = [];
+  create(createPlaylistDto: CreatePlaylistDto, userId: number) {
+    const idPlaylist = Math.random() * 100;
+    const newVideos: VideoEntity[] = [];
 
-    createCourseDto.lessons.forEach((s) =>
-      newLessons.push({ ...s, courseId: idCourse }),
+    createPlaylistDto.videos.forEach((s) =>
+      newVideos.push({ ...s, playlistId: idPlaylist }),
     );
 
-    for (const lesson of newLessons) {
+    for (const lesson of newVideos) {
       lesson.id = Math.random() * 100;
     }
 
-    const newCourse: CourseEntity = {
-      ...createCourseDto,
-      id: idCourse,
+    const newPlaylist: PlaylistEntity = {
+      ...createPlaylistDto,
+      id: idPlaylist,
       userId: userId,
-      lessons: newLessons,
+      videos: newVideos,
     };
-    this.categories.push({userId: userId, values: ['Front-end', 'Back-end']})
-    this.courses.push(newCourse);
-    console.log(this.courses);
-    return createCourseDto;
+    this.categories.push({userId: userId, values: ['Favoritos', 'Pop Music', 'Cursos']})
+    this.playlists.push(newPlaylist);
+    console.log(this.playlists);
+    return createPlaylistDto;
   }
 
   findAll() {
-    return this.courses;
+    return this.playlists;
   }
 
   findAllByUser(id: number, page: number, pageSize: number) {
-    let courses = this.courses.filter((t) => t.userId == id);
-    // courses.slice(page * 10, (page * 10) + pageSize)
-    return {playlists: courses.slice(page * 10, (page * 10) + pageSize), total: courses.length} ;
+    let playlists = this.playlists.filter((t) => t.userId == id);
+    return {playlists: playlists.slice(page * 10, (page * 10) + pageSize), total: playlists.length} ;
   }
 
   findAllCategoryByUser(id: number) {
@@ -281,43 +280,43 @@ export class CourseService {
   }
 
   findOne(id: number) {
-    return this.courses.find((t) => t.id == id);
+    return this.playlists.find((t) => t.id == id);
   }
 
-  update(idCourse: number, updateCourseDto: CreateCourseDto, userId: number) {
-    const updatedLessons: LessonEntity[] = [];
+  update(idPlaylist: number, updatePlaylistDto: CreatePlaylistDto, userId: number) {
+    const updatedLessons: VideoEntity[] = [];
 
-    updateCourseDto.lessons.forEach((s) =>
-      updatedLessons.push({ ...s, courseId: idCourse }),
+    updatePlaylistDto.videos.forEach((s) =>
+      updatedLessons.push({ ...s, playlistId: idPlaylist }),
     );
 
-    const updatedCourse: CourseEntity = {
-      ...updateCourseDto,
-      id: idCourse,
+    const updatedPlaylist: PlaylistEntity = {
+      ...updatePlaylistDto,
+      id: idPlaylist,
       userId: userId,
-      lessons: updatedLessons,
+      videos: updatedLessons,
     };
 
-    const newCourses = this.courses.map((course) =>
-      course.id === idCourse
-        ? { ...updatedCourse, lessons: updatedLessons }
-        : course,
+    const newPlaylists = this.playlists.map((playlist) =>
+      playlist.id === idPlaylist
+        ? { ...updatedPlaylist, videos: updatedLessons }
+        : playlist,
     );
 
-    this.courses = newCourses;
+    this.playlists = newPlaylists;
     let categoriesUser = this.categories.find((c) => c.userId == userId);
-    if(!categoriesUser.values.includes(updateCourseDto.category)){
-      categoriesUser.values.push(updateCourseDto.category);
+    if(!categoriesUser.values.includes(updatePlaylistDto.category)){
+      categoriesUser.values.push(updatePlaylistDto.category);
       this.categories.forEach((c) => c.userId == categoriesUser.userId ? {...categoriesUser, values: [...categoriesUser.values]} : c)
     }
 
-    return updateCourseDto;
+    return updatePlaylistDto;
   }
 
   remove(id: number) {
-    let course = this.courses.find((course) => course.id == id);
-    this.courses = this.courses.filter((course) => course.id !== id);
+    let playlist = this.playlists.find((playlist) => playlist.id == id);
+    this.playlists = this.playlists.filter((playlist) => playlist.id !== id);
 
-    return course;
+    return playlist;
   }
 }

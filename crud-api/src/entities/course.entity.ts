@@ -9,10 +9,10 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { UserEntity } from './user.entity';
-import { LessonEntity } from './lesson.entity';
+import { VideoEntity } from './lesson.entity';
 
 @Entity({ name: 'course' })
-export class CourseEntity {
+export class PlaylistEntity {
   @PrimaryGeneratedColumn({
     unsigned: true,
   })
@@ -37,12 +37,12 @@ export class CourseEntity {
   @Column({ name: 'userId' })
   userId: number;
 
-  @ManyToOne(() => UserEntity, (user) => user.courses)
+  @ManyToOne(() => UserEntity, (user) => user.playlists)
   @JoinColumn({ name: 'userId' })
   user?: UserEntity;
 
-  @OneToMany(() => LessonEntity, (lesson) => lesson.course, {
+  @OneToMany(() => VideoEntity, (video) => video.playlist, {
     cascade: true,
   })
-  lessons: LessonEntity[];
+  videos: VideoEntity[];
 }

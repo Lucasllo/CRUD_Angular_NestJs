@@ -8,38 +8,38 @@ import {
   Delete,
   UseGuards,
 } from '@nestjs/common';
-import { LessonService } from '../services/lesson.service';
-import { CreateLessonDto } from '../dtos/lesson/create-lesson.dto';
-import { UpdateLessonDto } from '../dtos/lesson/update-lesson.dto';
+import { VideoService } from '../services/lesson.service';
+import { CreateVideoDto } from '../dtos/lesson/create-lesson.dto';
+import { UpdateVideoDto } from '../dtos/lesson/update-lesson.dto';
 import { AuthGuard } from '../guards/auth.guard';
 
 UseGuards(AuthGuard);
 @Controller('lesson')
-export class LessonController {
-  constructor(private readonly lessonService: LessonService) {}
+export class VideoController {
+  constructor(private readonly videoService: VideoService) {}
 
   @Post()
-  create(@Body() createLessonDto: CreateLessonDto) {
-    return this.lessonService.create(createLessonDto);
+  create(@Body() createVideoDto: CreateVideoDto) {
+    return this.videoService.create(createVideoDto);
   }
 
   @Get('lessonsByCourse/:courseId')
   findAll(@Param('courseId') id: string) {
-    return this.lessonService.lessonsByCourse(Number(id));
+    return this.videoService.videosByCourse(Number(id));
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.lessonService.findOne(+id);
+    return this.videoService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateLessonDto: UpdateLessonDto) {
-    return this.lessonService.update(+id, updateLessonDto);
+  update(@Param('id') id: string, @Body() updateVideoDto: UpdateVideoDto) {
+    return this.videoService.update(+id, updateVideoDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.lessonService.remove(+id);
+    return this.videoService.remove(+id);
   }
 }

@@ -1,4 +1,4 @@
-export class CreateLessonDto {
+export class CreateVideoDto {
   id: number;
 
   name: string;

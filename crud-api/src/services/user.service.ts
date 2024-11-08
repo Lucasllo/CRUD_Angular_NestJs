@@ -23,7 +23,7 @@ export class UserService {
       password: "$2b$10$Nq.tY4hK4ACZItSHQKAyWuF0bQEBW5o4JDPpvXm4DUmYuSAMAKWs2", //Asdf@1234
       gender: "Masculino",
       agree: true,
-      courses: [],
+      playlists: [],
       createdAt: this.dateWithoutTimezone(new Date()),
       updatedAt: this.dateWithoutTimezone(new Date()),
       validatedEmail: true,
@@ -37,7 +37,7 @@ export class UserService {
       password: "testee",
       gender: "Masculino",
       agree: true,
-      courses: [],
+      playlists: [],
       createdAt: this.dateWithoutTimezone(new Date()),
       updatedAt: this.dateWithoutTimezone(new Date()),
       validatedEmail: true,
@@ -53,7 +53,7 @@ export class UserService {
       validatedEmail: true,
       createdAt: this.dateWithoutTimezone(new Date()),
       updatedAt: this.dateWithoutTimezone(new Date()),
-      courses: [],
+      playlists: [],
       password: await bcrypt.hash(
         createUserDto.password,
         await bcrypt.genSalt()

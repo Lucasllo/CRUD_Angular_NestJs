@@ -19,7 +19,7 @@ const canMatch: CanMatchFn = async (route, segments) => {
 
 export const routes: Routes = [
   {
-    title: "CRUD",
+    title: "Playlists",
     path: "",
     redirectTo: () => {
       if (sessionStorage.getItem("token")) {
@@ -31,7 +31,7 @@ export const routes: Routes = [
     pathMatch: "full",
   },
   {
-    title: "CRUD",
+    title: "Playlists",
     path: "home",
     component: HomeComponent,
   },

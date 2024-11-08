@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { CourseEntity } from './course.entity';
+import { PlaylistEntity } from './course.entity';
 
 @Entity({ name: 'user' })
 export class UserEntity {
@@ -56,8 +56,8 @@ export class UserEntity {
   @Column()
   agree: boolean;
 
-  @OneToMany(() => CourseEntity, (course) => course.user, {
+  @OneToMany(() => PlaylistEntity, (playlist) => playlist.user, {
     cascade: true,
   })
-  courses: CourseEntity[];
+  playlists: PlaylistEntity[];
 }

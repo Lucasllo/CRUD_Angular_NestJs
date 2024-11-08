@@ -1,11 +1,11 @@
-import { CreateLessonDto } from '../lesson/create-lesson.dto';
+import { CreateVideoDto } from '../lesson/create-lesson.dto';
 
-export class CreateCourseDto {
+export class CreatePlaylistDto {
   id: number;
 
   name: string;
 
   category: string;
 
-  lessons: CreateLessonDto[];
+  videos: CreateVideoDto[];
 }

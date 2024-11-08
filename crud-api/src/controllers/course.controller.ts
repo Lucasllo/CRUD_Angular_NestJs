@@ -9,48 +9,48 @@ import {
   UseGuards,
   Query,
 } from '@nestjs/common';
-import { CourseService } from '../services/course.service';
-import { CreateCourseDto } from '../dtos/course/create-course.dto';
+import { PlaylistService } from '../services/course.service';
+import { CreatePlaylistDto } from '../dtos/course/create-course.dto';
 import { AuthGuard } from '../guards/auth.guard';
 import { User } from '../decorators/user.decorator';
 import { UserEntity } from '../entities/user.entity';
 
 UseGuards(AuthGuard);
 @Controller('course')
-export class CourseController {
-  constructor(private readonly courseService: CourseService) {}
+export class PlaylistController {
+  constructor(private readonly playlistService: PlaylistService) {}
 
   @Post()
-  create(@Body() createCourseDto: CreateCourseDto, @User() user: UserEntity) {
-    return this.courseService.create(createCourseDto, user.id);
+  create(@Body() createPlaylistDto: CreatePlaylistDto, @User() user: UserEntity) {
+    return this.playlistService.create(createPlaylistDto, user.id);
   }
 
   @Get('coursesByUser')
   findAllByUser(@User() user: UserEntity, @Query() params:{page: number, pageSize: number}) {
-    return this.courseService.findAllByUser(user.id, params.page, params.pageSize);
+    return this.playlistService.findAllByUser(user.id, params.page, params.pageSize);
   }
 
   @Get('coursesCategoryByUser')
-  coursesCategoryByUser(@User() user: UserEntity) {
-    return this.courseService.findAllCategoryByUser(user.id);
+  playlistsCategoryByUser(@User() user: UserEntity) {
+    return this.playlistService.findAllCategoryByUser(user.id);
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.courseService.findOne(+id);
+    return this.playlistService.findOne(+id);
   }
 
   @Patch(':id')
   update(
     @Param('id') id: string,
-    @Body() updateCourseDto: CreateCourseDto,
+    @Body() updatePlaylistDto: CreatePlaylistDto,
     @User() user: UserEntity,
   ) {
-    return this.courseService.update(+id, updateCourseDto, user.id);
+    return this.playlistService.update(+id, updatePlaylistDto, user.id);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.courseService.remove(+id);
+    return this.playlistService.remove(+id);
   }
 }
