@@ -273,7 +273,7 @@ export class CourseService {
   findAllByUser(id: number, page: number, pageSize: number) {
     let courses = this.courses.filter((t) => t.userId == id);
     // courses.slice(page * 10, (page * 10) + pageSize)
-    return {courses: courses.slice(page * 10, (page * 10) + pageSize), total: courses.length} ;
+    return {playlists: courses.slice(page * 10, (page * 10) + pageSize), total: courses.length} ;
   }
 
   findAllCategoryByUser(id: number) {

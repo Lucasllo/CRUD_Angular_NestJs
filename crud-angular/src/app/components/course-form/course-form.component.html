@@ -46,7 +46,7 @@
       </mat-error>
       }
 
-      <table formArrayName="lessons" class="full-width">
+      <table formArrayName="videos" class="full-width">
         @for (lesson of getLessonsFormArray(); track $index; let i = $index) {
         <tr [formGroupName]="i">
           <td style="width: 65%">

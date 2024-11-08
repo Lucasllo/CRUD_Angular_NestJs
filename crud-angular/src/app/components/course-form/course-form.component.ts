@@ -80,7 +80,7 @@ export class PlaylistFormComponent implements OnInit {
   readonly dialog = inject(MatDialog);
 
   form!: FormGroup;
-  course = input.required<Playlist>();
+  playlist = input.required<Playlist>();
   submitted = false;
   categories = this.coursesService.allCategories;
 
@@ -90,9 +90,9 @@ export class PlaylistFormComponent implements OnInit {
 
   createForm() {
     let course = computed(() =>
-      this.course()
-        ? this.course()
-        : { id: "", name: "", category: "", lessons: [] }
+      this.playlist()
+        ? this.playlist()
+        : { id: "", name: "", category: "", videos: [] }
     );
 
     this.form = this.formBuilder.group({
@@ -107,7 +107,7 @@ export class PlaylistFormComponent implements OnInit {
       category: new FormControl(course().category, {
         validators: [Validators.required],
       }),
-      lessons: this.formBuilder.array(
+      videos: this.formBuilder.array(
         this.retrieveLessons(course()),
         Validators.required
       ),
@@ -115,30 +115,30 @@ export class PlaylistFormComponent implements OnInit {
   }
 
   private retrieveLessons(course: Playlist) {
-    const lessons = [];
+    const videos = [];
 
     if (course?.videos) {
-      course.videos.forEach((lesson) => {
-        lessons.push(this.createLesson(lesson));
+      course.videos.forEach((video) => {
+        videos.push(this.createLesson(video));
       });
     } else {
-      lessons.push(this.createLesson());
+      videos.push(this.createLesson());
     }
 
-    return lessons;
+    return videos;
   }
 
-  private createLesson(lesson: Video = { id: "", name: "", youtubeUrl: "" }) {
+  private createLesson(video: Video = { id: "", name: "", youtubeUrl: "" }) {
     return this.formBuilder.group({
-      _id: new FormControl(lesson.id),
-      name: new FormControl(lesson.name, {
+      _id: new FormControl(video.id),
+      name: new FormControl(video.name, {
         validators: [
           Validators.required,
           Validators.minLength(5),
           Validators.maxLength(100),
         ],
       }),
-      youtubeUrl: new FormControl(lesson.youtubeUrl, {
+      youtubeUrl: new FormControl(video.youtubeUrl, {
         validators: [
           Validators.required,
           Validators.minLength(10),
@@ -149,17 +149,17 @@ export class PlaylistFormComponent implements OnInit {
   }
 
   addLesson() {
-    const lesson = this.form.get("lessons") as UntypedFormArray;
+    const lesson = this.form.get("videos") as UntypedFormArray;
     lesson.push(this.createLesson());
   }
 
   removeLesson(index: number) {
-    const lesson = this.form.get("lessons") as UntypedFormArray;
+    const lesson = this.form.get("videos") as UntypedFormArray;
     lesson.removeAt(index);
   }
 
   getLessonsFormArray() {
-    return (<UntypedFormArray>this.form.get("lessons")).controls;
+    return (<UntypedFormArray>this.form.get("videos")).controls;
   }
 
   onSubmit() {
@@ -238,8 +238,8 @@ export class PlaylistFormComponent implements OnInit {
   }
 
   isFormArrayRequired() {
-    const lessons = this.form.get("lessons") as UntypedFormArray;
-    return !lessons.valid && lessons.hasError("required") && lessons.touched;
+    const videos = this.form.get("videos") as UntypedFormArray;
+    return !videos.valid && videos.hasError("required") && videos.touched;
   }
 
   openDialog(): void {
