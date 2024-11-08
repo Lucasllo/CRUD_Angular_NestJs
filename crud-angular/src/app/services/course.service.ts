@@ -1,40 +1,40 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable, InputSignal, inject, signal } from '@angular/core';
-import { Observable, of, tap } from 'rxjs';
-import { UserService } from './user.service';
-import { Course } from '../models/course';
-import { Router } from '@angular/router';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Injectable, InputSignal, inject, signal } from "@angular/core";
+import { Observable, of, tap } from "rxjs";
+import { UserService } from "./user.service";
+import { Course } from "../models/course";
+import { Router } from "@angular/router";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class CoursesService {
   private readonly httpClient = inject(HttpClient);
   private readonly router = inject(Router);
   private readonly initialCourses = [
     {
-      id: '1',
-      category: 'testando',
-      name: 'teste demo',
-      lessons: [{ id: '1', name: 'demo', youtubeUrl: 'm3lF2qEA2cw' }],
+      id: "1",
+      category: "testando",
+      name: "teste demo",
+      lessons: [{ id: "1", name: "demo", youtubeUrl: "m3lF2qEA2cw" }],
     },
     {
-      id: '2',
-      category: 'testando',
-      name: 'teste demo 2',
-      lessons: [{ id: '1', name: 'demo 2', youtubeUrl: '7hHZnvjCbVw' }],
+      id: "2",
+      category: "testando",
+      name: "teste demo 2",
+      lessons: [{ id: "1", name: "demo 2", youtubeUrl: "7hHZnvjCbVw" }],
     },
     {
-      id: '3',
-      category: 'testando',
-      name: 'tarefa demo',
+      id: "3",
+      category: "testando",
+      name: "tarefa demo",
       lessons: [
-        { id: '1', name: 'demo ', youtubeUrl: 'm3lF2qEA2cw' },
-        { id: '2', name: 'demo 2', youtubeUrl: '7hHZnvjCbVw' },
+        { id: "1", name: "demo ", youtubeUrl: "m3lF2qEA2cw" },
+        { id: "2", name: "demo 2", youtubeUrl: "7hHZnvjCbVw" },
       ],
     },
   ];
-  private readonly initialCategories = ['Front-end', 'Back-end'];
+  private readonly initialCategories = ["Front-end", "Back-end"];
 
   private readonly categories = signal<string[]>([]);
   private readonly courses = signal<Course[]>([]);
@@ -47,42 +47,45 @@ export class CoursesService {
   }
 
   initCourses() {
-    let coursesDemo = localStorage.getItem('coursesDemo');
+    let coursesDemo = sessionStorage.getItem("coursesDemo");
     if (coursesDemo) {
       this.courses.set(JSON.parse(coursesDemo));
     } else {
       this.resetCourses();
-      localStorage.setItem('coursesDemo', JSON.stringify(this.courses()));
+      sessionStorage.setItem("coursesDemo", JSON.stringify(this.courses()));
     }
-    
-    let categoriesDemo = localStorage.getItem('categoriesDemo');
+
+    let categoriesDemo = sessionStorage.getItem("categoriesDemo");
     if (categoriesDemo) {
-      console.log('categoria aqui')
+      console.log("categoria aqui");
       this.categories.set(JSON.parse(categoriesDemo));
     } else {
       this.resetCategories();
-      localStorage.setItem('categoriesDemo', JSON.stringify(this.categories()));
+      sessionStorage.setItem(
+        "categoriesDemo",
+        JSON.stringify(this.categories())
+      );
     }
   }
 
-  setCourses(courses: InputSignal<Course[]>){
+  setCourses(courses: InputSignal<Course[]>) {
     this.courses.set(courses());
   }
 
-  resetCourses(){
+  resetCourses() {
     this.courses.set(this.initialCourses);
   }
 
-  resetCategories(){
+  resetCategories() {
     this.categories.set(this.initialCategories);
   }
 
-  updateCategories(value: string){
-    this.categories.update((oldCategories)=> [...oldCategories, value])
+  updateCategories(value: string) {
+    this.categories.update((oldCategories) => [...oldCategories, value]);
   }
 
   save(course: Course): Observable<Course> {
-    if (course.id == '') {
+    if (course.id == "") {
       return this.create(course);
     } else {
       return this.update(course);
@@ -90,7 +93,7 @@ export class CoursesService {
   }
 
   saveDemo(course: Course): Observable<Course> {
-    if (course.id == '') {
+    if (course.id == "") {
       return this.createDemo(course);
     } else {
       return this.updateDemo(course);
@@ -107,7 +110,7 @@ export class CoursesService {
 
   loadUserCourseById(id: string): Observable<Course> {
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
+      Authorization: `Bearer ${sessionStorage.getItem("token")}`,
     });
 
     return this.httpClient.get<Course>(`http://localhost:3000/course/` + id, {
@@ -117,28 +120,36 @@ export class CoursesService {
 
   loadByUserId(): Observable<Course[]> {
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
+      Authorization: `Bearer ${sessionStorage.getItem("token")}`,
     });
 
-    return this.httpClient.get<Course[]>(
-      `http://localhost:3000/course/coursesByUser`,
-      { headers: headers }
-    ).pipe(tap({next: (data) => this.courses.set(data)}));
+    return this.httpClient
+      .get<Course[]>(`http://localhost:3000/course/coursesByUser`, {
+        headers: headers,
+      })
+      .pipe(tap({ next: (data) => this.courses.set(data) }));
   }
 
-  loadCategoriesByUserId(): void{
+  loadCategoriesByUserId(): void {
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
+      Authorization: `Bearer ${sessionStorage.getItem("token")}`,
     });
-    this.httpClient.get<{userId: number, values: string[]}>(
-      `http://localhost:3000/course/coursesCategoryByUser`,
-      { headers: headers }
-    ).subscribe({next: (data) => {this.categories.set(data.values)}, error: (err) => console.log(err)});
+    this.httpClient
+      .get<{ userId: number; values: string[] }>(
+        `http://localhost:3000/course/coursesCategoryByUser`,
+        { headers: headers }
+      )
+      .subscribe({
+        next: (data) => {
+          this.categories.set(data.values);
+        },
+        error: (err) => console.log(err),
+      });
   }
 
   create(course: Course): Observable<Course> {
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
+      Authorization: `Bearer ${sessionStorage.getItem("token")}`,
     });
     return this.httpClient.post<Course>(
       `http://localhost:3000/course`,
@@ -151,7 +162,7 @@ export class CoursesService {
 
   update(courseUpdated: Course): Observable<Course> {
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
+      Authorization: `Bearer ${sessionStorage.getItem("token")}`,
     });
     return this.httpClient.patch<Course>(
       `http://localhost:3000/course/` + courseUpdated.id,
@@ -172,29 +183,34 @@ export class CoursesService {
       lesson.id = (Math.random() * 100).toFixed(3).toString();
     }
 
-    let coursesDemo = localStorage.getItem('coursesDemo');
+    let coursesDemo = sessionStorage.getItem("coursesDemo");
     if (coursesDemo) {
       let courses: Course[] = JSON.parse(coursesDemo);
 
       courses.push(newCourse);
-      localStorage.setItem('coursesDemo', JSON.stringify(courses));
+      sessionStorage.setItem("coursesDemo", JSON.stringify(courses));
       this.courses.set(courses);
     }
     this.setCategoriesDemo(course);
     return of(newCourse);
   }
 
-  private setCategoriesDemo(course: Course){
-    let categoriesDemo = localStorage.getItem('categoriesDemo')
-    if(categoriesDemo){
-      if(!(JSON.parse(categoriesDemo) as Array<string>).includes(course.category)){
-        localStorage.setItem('categoriesDemo', JSON.stringify(this.categories()));
+  private setCategoriesDemo(course: Course) {
+    let categoriesDemo = sessionStorage.getItem("categoriesDemo");
+    if (categoriesDemo) {
+      if (
+        !(JSON.parse(categoriesDemo) as Array<string>).includes(course.category)
+      ) {
+        sessionStorage.setItem(
+          "categoriesDemo",
+          JSON.stringify(this.categories())
+        );
       }
     }
   }
 
   updateDemo(courseUpdated: Course): Observable<Course> {
-    let coursesDemo = localStorage.getItem('coursesDemo');
+    let coursesDemo = sessionStorage.getItem("coursesDemo");
     if (coursesDemo) {
       let courses: Course[] = JSON.parse(coursesDemo);
 
@@ -202,7 +218,7 @@ export class CoursesService {
         course.id === courseUpdated.id ? { ...courseUpdated } : course
       );
 
-      localStorage.setItem('coursesDemo', JSON.stringify(newCourses));
+      sessionStorage.setItem("coursesDemo", JSON.stringify(newCourses));
       this.courses.set(newCourses);
     }
     this.setCategoriesDemo(courseUpdated);
@@ -210,33 +226,35 @@ export class CoursesService {
     return of(courseUpdated);
   }
 
-  deleteCourse(id: string){
-    if (this.router.url.includes('/user/courses')) {
+  deleteCourse(id: string) {
+    if (this.router.url.includes("/user/courses")) {
       return this.delete(id);
-    }else{
+    } else {
       return this.deleteDemo(id);
     }
   }
 
   deleteDemo(id: string) {
-    let coursesDemo = localStorage.getItem('coursesDemo');
+    let coursesDemo = sessionStorage.getItem("coursesDemo");
     let course = null;
     if (coursesDemo) {
       let courses: Course[] = JSON.parse(coursesDemo);
       course = courses.find((course) => course.id == id);
       const newCourses = courses.filter((course) => course.id !== id);
 
-      localStorage.setItem('coursesDemo', JSON.stringify(newCourses));
+      sessionStorage.setItem("coursesDemo", JSON.stringify(newCourses));
 
-      this.courses.update((oldCourses) => oldCourses.filter((course) => course.id !== id));
+      this.courses.update((oldCourses) =>
+        oldCourses.filter((course) => course.id !== id)
+      );
       console.log(this.courses());
     }
     return of(course);
   }
 
-  delete(id: string): Observable<Course>  {
+  delete(id: string): Observable<Course> {
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
+      Authorization: `Bearer ${sessionStorage.getItem("token")}`,
     });
     return this.httpClient.delete<Course>(
       `http://localhost:3000/course/` + id,

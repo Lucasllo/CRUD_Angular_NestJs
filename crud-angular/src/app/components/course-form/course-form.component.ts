@@ -1,4 +1,11 @@
-import { Component, OnInit, computed, inject, input, signal } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  computed,
+  inject,
+  input,
+  signal,
+} from "@angular/core";
 import {
   FormControl,
   FormGroup,
@@ -6,36 +13,40 @@ import {
   ReactiveFormsModule,
   UntypedFormArray,
   Validators,
-} from '@angular/forms';
+} from "@angular/forms";
 import {
   MatCard,
   MatCardActions,
   MatCardContent,
-} from '@angular/material/card';
-import { MatOption } from '@angular/material/core';
+} from "@angular/material/card";
+import { MatOption } from "@angular/material/core";
 import {
   MatError,
   MatFormField,
   MatFormFieldModule,
   MatHint,
   MatLabel,
-} from '@angular/material/form-field';
-import { MatIcon } from '@angular/material/icon';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatToolbar } from '@angular/material/toolbar';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { CoursesService } from '../../services/course.service';
-import { Lesson } from '../../models/lesson';
-import { Location } from '@angular/common';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelect } from '@angular/material/select';
-import { MatButton, MatButtonModule, MatIconButton } from '@angular/material/button';
-import { Course } from '../../models/course';
-import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '../dialog/dialog.component';
+} from "@angular/material/form-field";
+import { MatIcon } from "@angular/material/icon";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { MatToolbar } from "@angular/material/toolbar";
+import { ActivatedRoute, Router, RouterLink } from "@angular/router";
+import { CoursesService } from "../../services/course.service";
+import { Lesson } from "../../models/lesson";
+import { Location } from "@angular/common";
+import { MatInputModule } from "@angular/material/input";
+import { MatSelect } from "@angular/material/select";
+import {
+  MatButton,
+  MatButtonModule,
+  MatIconButton,
+} from "@angular/material/button";
+import { Course } from "../../models/course";
+import { MatDialog } from "@angular/material/dialog";
+import { DialogComponent } from "../dialog/dialog.component";
 
 @Component({
-  selector: 'app-login',
+  selector: "app-course-form",
   standalone: true,
   imports: [
     ReactiveFormsModule,
@@ -55,10 +66,10 @@ import { DialogComponent } from '../dialog/dialog.component';
     MatButtonModule,
     MatIconButton,
     RouterLink,
-    MatIcon
+    MatIcon,
   ],
-  templateUrl: './course-form.component.html',
-  styleUrl: './course-form.component.css',
+  templateUrl: "./course-form.component.html",
+  styleUrl: "./course-form.component.css",
 })
 export class CourseFormComponent implements OnInit {
   private readonly coursesService = inject(CoursesService);
@@ -74,7 +85,6 @@ export class CourseFormComponent implements OnInit {
   submitted = false;
   categories = this.coursesService.allCategories;
 
-
   async ngOnInit() {
     this.createForm();
   }
@@ -83,7 +93,7 @@ export class CourseFormComponent implements OnInit {
     let course = computed(() =>
       this.course()
         ? this.course()
-        : { id: '', name: '', category: '', lessons: [] }
+        : { id: "", name: "", category: "", lessons: [] }
     );
 
     this.form = this.formBuilder.group({
@@ -119,7 +129,7 @@ export class CourseFormComponent implements OnInit {
     return lessons;
   }
 
-  private createLesson(lesson: Lesson = { id: '', name: '', youtubeUrl: '' }) {
+  private createLesson(lesson: Lesson = { id: "", name: "", youtubeUrl: "" }) {
     return this.formBuilder.group({
       _id: new FormControl(lesson.id),
       name: new FormControl(lesson.name, {
@@ -140,22 +150,22 @@ export class CourseFormComponent implements OnInit {
   }
 
   addLesson() {
-    const lesson = this.form.get('lessons') as UntypedFormArray;
+    const lesson = this.form.get("lessons") as UntypedFormArray;
     lesson.push(this.createLesson());
   }
 
   removeLesson(index: number) {
-    const lesson = this.form.get('lessons') as UntypedFormArray;
+    const lesson = this.form.get("lessons") as UntypedFormArray;
     lesson.removeAt(index);
   }
 
   getLessonsFormArray() {
-    return (<UntypedFormArray>this.form.get('lessons')).controls;
+    return (<UntypedFormArray>this.form.get("lessons")).controls;
   }
 
   onSubmit() {
     if (this.form.valid) {
-      if (this.router.url.includes('/user/courses')) {
+      if (this.router.url.includes("/user/courses")) {
         this.coursesService.save(this.form.value).subscribe({
           next: (data) => console.log(data),
           error: (error) => {
@@ -178,7 +188,7 @@ export class CourseFormComponent implements OnInit {
           complete: () => {
             this.submitted = true;
             this.onSuccess();
-            console.log('complete');
+            console.log("complete");
             this.onCancel();
           },
         });
@@ -189,13 +199,13 @@ export class CourseFormComponent implements OnInit {
   }
 
   onError() {
-    this.snackBar.open('Erro ao salvar curso!', undefined, {
+    this.snackBar.open("Erro ao salvar curso!", undefined, {
       duration: 5000,
     });
   }
 
   onSuccess() {
-    this.snackBar.open('Curso salvo com sucesso!', undefined, {
+    this.snackBar.open("Curso salvo com sucesso!", undefined, {
       duration: 5000,
     });
   }
@@ -207,40 +217,44 @@ export class CourseFormComponent implements OnInit {
   getErrorMessage(fieldName: string) {
     const field = this.form.get(fieldName);
 
-    if (field?.hasError('required')) {
-      return 'Campo obrigatorio.';
+    if (field?.hasError("required")) {
+      return "Campo obrigatorio.";
     }
 
-    if (field?.hasError('minlength')) {
+    if (field?.hasError("minlength")) {
       const requiredLength = field.errors
-        ? field.errors['minlength']['requiredLength']
+        ? field.errors["minlength"]["requiredLength"]
         : 5;
       return `Tamanho minimo precisa ser de ${requiredLength} caracteres.`;
     }
 
-    if (field?.hasError('maxlength')) {
+    if (field?.hasError("maxlength")) {
       const requiredLength = field.errors
-        ? field.errors['maxlength']['requiredLength']
+        ? field.errors["maxlength"]["requiredLength"]
         : 100;
       return `Tamanho maximo excedido de ${requiredLength} caracteres.`;
     }
 
-    return 'Campo invalido.';
+    return "Campo invalido.";
   }
 
   isFormArrayRequired() {
-    const lessons = this.form.get('lessons') as UntypedFormArray;
-    return !lessons.valid && lessons.hasError('required') && lessons.touched;
+    const lessons = this.form.get("lessons") as UntypedFormArray;
+    return !lessons.valid && lessons.hasError("required") && lessons.touched;
   }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogComponent, {
-      data: {header: 'Nova Categoria', text: 'Informe qual nome da categoria', data: ''},
+      data: {
+        header: "Nova Categoria",
+        text: "Informe qual nome da categoria",
+        data: "",
+      },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result !== undefined) {
-        this.form.get('category')?.setValue(result);
+        this.form.get("category")?.setValue(result);
         this.coursesService.updateCategories(result);
       }
     });

@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from "@angular/core";
 import {
   AbstractControl,
   FormBuilder,
@@ -6,37 +6,37 @@ import {
   FormGroup,
   ReactiveFormsModule,
   Validators,
-} from '@angular/forms';
+} from "@angular/forms";
 import {
   MatCard,
   MatCardActions,
   MatCardContent,
   MatCardHeader,
   MatCardTitle,
-} from '@angular/material/card';
+} from "@angular/material/card";
 import {
   DateAdapter,
   MAT_DATE_LOCALE,
   MatOption,
-} from '@angular/material/core';
+} from "@angular/material/core";
 import {
   MatError,
   MatFormField,
   MatHint,
   MatLabel,
-} from '@angular/material/form-field';
-import { MatIcon } from '@angular/material/icon';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatToolbar } from '@angular/material/toolbar';
-import { Location } from '@angular/common';
-import { MatInputModule } from '@angular/material/input';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatSelect } from '@angular/material/select';
-import { MatCheckbox } from '@angular/material/checkbox';
-import { MatButtonModule } from '@angular/material/button';
-import { UserService } from '../../services/user.service';
-import { User } from '../../models/user';
-import { ActivatedRoute } from '@angular/router';
+} from "@angular/material/form-field";
+import { MatIcon } from "@angular/material/icon";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { MatToolbar } from "@angular/material/toolbar";
+import { Location } from "@angular/common";
+import { MatInputModule } from "@angular/material/input";
+import { MatDatepickerModule } from "@angular/material/datepicker";
+import { MatSelect } from "@angular/material/select";
+import { MatCheckbox } from "@angular/material/checkbox";
+import { MatButtonModule } from "@angular/material/button";
+import { UserService } from "../../services/user.service";
+import { User } from "../../models/user";
+import { ActivatedRoute } from "@angular/router";
 
 function equalValues(controlName1: string, controlName2: string) {
   return (control: AbstractControl) => {
@@ -52,7 +52,7 @@ function equalValues(controlName1: string, controlName2: string) {
 }
 
 @Component({
-  selector: 'app-login',
+  selector: "app-register",
   standalone: true,
   imports: [
     ReactiveFormsModule,
@@ -74,8 +74,8 @@ function equalValues(controlName1: string, controlName2: string) {
     MatCardTitle,
     MatCardHeader,
   ],
-  templateUrl: './register.component.html',
-  styleUrl: './register.component.css',
+  templateUrl: "./register.component.html",
+  styleUrl: "./register.component.css",
 })
 export class RegisterComponent implements OnInit {
   form!: FormGroup<{
@@ -91,12 +91,12 @@ export class RegisterComponent implements OnInit {
     agree: FormControl<boolean | null>;
   }>;
   user: User = {
-    name: '',
-    lastName: '',
-    email: '',
+    name: "",
+    lastName: "",
+    email: "",
     dateBirth: new Date(),
-    gender: '',
-    password: '',
+    gender: "",
+    password: "",
     agree: false,
   };
   private readonly formBuiler = inject(FormBuilder);
@@ -108,11 +108,11 @@ export class RegisterComponent implements OnInit {
     inject<DateAdapter<unknown, unknown>>(DateAdapter);
   private readonly _locale = signal(inject<unknown>(MAT_DATE_LOCALE));
 
-  genders = ['Prefiro não informar', 'Masculino', 'Feminino', 'Outro'];
+  genders = ["Prefiro não informar", "Masculino", "Feminino", "Outro"];
 
   ngOnInit(): void {
     this.createForm();
-    this._locale.set('pt-BR');
+    this._locale.set("pt-BR");
     this._adapter.setLocale(this._locale());
   }
 
@@ -146,12 +146,12 @@ export class RegisterComponent implements OnInit {
           password: new FormControl(this.user.password, {
             validators: [Validators.required, Validators.minLength(6)],
           }),
-          confirmPassword: new FormControl('', {
+          confirmPassword: new FormControl("", {
             validators: [Validators.required, Validators.minLength(6)],
           }),
         },
         {
-          validators: [equalValues('password', 'confirmPassword')],
+          validators: [equalValues("password", "confirmPassword")],
         }
       ),
       agree: new FormControl(this.user.agree, {
@@ -187,13 +187,13 @@ export class RegisterComponent implements OnInit {
   }
 
   onError() {
-    this.snackBar.open('Erro ao salvar!', undefined, {
+    this.snackBar.open("Erro ao salvar!", undefined, {
       duration: 5000,
     });
   }
 
   onSuccess() {
-    this.snackBar.open('Cadastro realizado com sucesso!', undefined, {
+    this.snackBar.open("Cadastro realizado com sucesso!", undefined, {
       duration: 5000,
     });
   }
@@ -205,24 +205,24 @@ export class RegisterComponent implements OnInit {
   getErrorMessage(fieldName: string) {
     const field = this.form.get(fieldName);
 
-    if (field?.hasError('required')) {
-      return 'Campo obrigatorio.';
+    if (field?.hasError("required")) {
+      return "Campo obrigatorio.";
     }
 
-    if (field?.hasError('minlength')) {
+    if (field?.hasError("minlength")) {
       const requiredLength = field.errors
-        ? field.errors['minlength']['requiredLength']
+        ? field.errors["minlength"]["requiredLength"]
         : 5;
       return `Tamanho minimo precisa ser de ${requiredLength} caracteres.`;
     }
 
-    if (field?.hasError('maxlength')) {
+    if (field?.hasError("maxlength")) {
       const requiredLength = field.errors
-        ? field.errors['maxlength']['requiredLength']
+        ? field.errors["maxlength"]["requiredLength"]
         : 100;
       return `Tamanho maximo excedido de ${requiredLength} caracteres.`;
     }
 
-    return 'Campo invalido.';
+    return "Campo invalido.";
   }
 }

@@ -1,45 +1,45 @@
-import { Token } from './../models/token';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { inject, Injectable, signal } from '@angular/core';
-import { User } from '../models/user';
-import { catchError, map, Observable, of, tap, throwError } from 'rxjs';
+import { Token } from "./../models/token";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { inject, Injectable, signal } from "@angular/core";
+import { User } from "../models/user";
+import { catchError, map, Observable, of, tap, throwError } from "rxjs";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class UserService {
-  private readonly API = 'http://localhost:3000';
+  private readonly API = "http://localhost:3000";
   private readonly httpClient = inject(HttpClient);
   private readonly users = signal<User[]>([
     {
       id: 1,
-      name: 'lucas',
-      lastName: 'teste',
-      email: 'lucasteste@mailinator.com',
-      dateBirth: new Date('10/10/1995'),
-      password: 'Asdf@1234',
-      gender: 'Masculino',
+      name: "lucas",
+      lastName: "teste",
+      email: "lucasteste@mailinator.com",
+      dateBirth: new Date("10/10/1995"),
+      password: "Asdf@1234",
+      gender: "Masculino",
       agree: true,
     },
     {
       id: 2,
-      name: 'david',
-      lastName: 'teste',
-      email: 'davidteste@mailinator.com',
-      dateBirth: new Date('11/11/1990'),
-      password: 'testee',
-      gender: 'Masculino',
+      name: "david",
+      lastName: "teste",
+      email: "davidteste@mailinator.com",
+      dateBirth: new Date("11/11/1990"),
+      password: "testee",
+      gender: "Masculino",
       agree: true,
     },
   ]);
 
   private readonly logado = signal<boolean>(
-    localStorage.getItem('token') ? true : false
+    sessionStorage.getItem("token") ? true : false
   );
   public readonly logged = this.logado.asReadonly();
 
   isLogado() {
-    this.logado.set(localStorage.getItem('token') ? true : false);
+    this.logado.set(sessionStorage.getItem("token") ? true : false);
   }
 
   save(user: User): Observable<User> {
@@ -59,7 +59,7 @@ export class UserService {
       .pipe(
         tap({
           next: (data) => {
-            localStorage.setItem('token', data.token);
+            sessionStorage.setItem("token", data.token);
             this.logado.set(true);
           },
         })
@@ -68,7 +68,7 @@ export class UserService {
 
   check(): Observable<boolean> {
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
+      Authorization: `Bearer ${sessionStorage.getItem("token")}`,
     });
     return this.httpClient
       .get<boolean>(`${this.API}/auth/check`, {
@@ -78,9 +78,9 @@ export class UserService {
         catchError((error) =>
           throwError(() => {
             console.log(error);
-            localStorage.removeItem('token');
+            sessionStorage.removeItem("token");
             this.logado.set(false);
-            return new Error('token invalido');
+            return new Error("token invalido");
           })
         )
       );

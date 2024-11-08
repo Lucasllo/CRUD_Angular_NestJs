@@ -31,9 +31,10 @@ mat-toolbar {
 }
 
 .action-column {
-  flex: 0 0 145px;
+  flex: 0 0 160px;
 }
 
 .action-column-header {
-  flex: 0 0 150px;
+  flex: 0 0 160px;
+  justify-content: center;
 }

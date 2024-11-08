@@ -1,5 +1,5 @@
-<mat-drawer-container autosize class="example-container">
-    <mat-drawer #drawer mode="side" opened="true" class="example-sidenav">
+<mat-drawer-container autosize class="container">
+    <mat-drawer #drawer mode="side" opened="true" class="sidenav">
       <div>
         <h3>{{ course().name }}</h3>
       </div>
@@ -18,7 +18,7 @@
   
     </mat-drawer>
   
-    <div class="example-sidenav-content" #youTubePlayer>
+    <div class="sidenav-content" #youTubePlayer>
       <youtube-player
         [width]="videoWidth()"
         [height]="videoHeight()"
