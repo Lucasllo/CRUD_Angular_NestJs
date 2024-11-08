@@ -1,16 +1,16 @@
 <mat-drawer-container autosize class="container">
     <mat-drawer #drawer mode="side" opened="true" class="sidenav">
       <div>
-        <h3>{{ course().name }}</h3>
+        <h3>{{ playlist().name }}</h3>
       </div>
       <mat-nav-list dense >
-          @if (course().lessons) {            
-            @for (lesson of course().lessons; track $index) {
+          @if (playlist().videos) {            
+            @for (video of playlist().videos; track $index) {
               <mat-list-item
                 class="list-with-border"
-                (click)="display(lesson)"
-                [activated]="displaySelectedLesson(lesson)">
-                <span mat-line>{{ lesson.name }}</span>
+                (click)="display(video)"
+                [activated]="displaySelectedVideo(video)">
+                <span mat-line>{{ video.name }}</span>
               </mat-list-item>
             }
           }
@@ -22,7 +22,7 @@
       <youtube-player
         [width]="videoWidth()"
         [height]="videoHeight()"
-        [videoId]="selectedLesson().youtubeUrl"></youtube-player>
+        [videoId]="selectedVideo().youtubeUrl"></youtube-player>
     </div>
   </mat-drawer-container>
   

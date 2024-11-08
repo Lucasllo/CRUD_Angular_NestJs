@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { CoursesComponent } from '../courses/courses.component';
+import { PlaylistsComponent } from '../courses/courses.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CoursesComponent],
+  imports: [PlaylistsComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })

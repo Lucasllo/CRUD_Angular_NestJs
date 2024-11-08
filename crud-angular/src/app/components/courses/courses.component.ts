@@ -1,4 +1,4 @@
-import { Component, DestroyRef, OnInit, inject, input, signal } from "@angular/core";
+import { Component, DestroyRef, OnInit, inject, signal } from "@angular/core";
 import { MatIcon } from "@angular/material/icon";
 import {
   MatCell,
@@ -16,11 +16,10 @@ import { MatToolbar } from "@angular/material/toolbar";
 import { MatCard, MatCardContent } from "@angular/material/card";
 import { MatButtonModule } from "@angular/material/button";
 import { ActivatedRoute, Router } from "@angular/router";
-import { CoursesService } from "../../services/course.service";
-import { Course } from "../../models/course";
+import { PlaylistService } from "../../services/playlist.service";
+import { Playlist } from "../../models/playlist";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatPaginator, PageEvent } from "@angular/material/paginator";
-import { Observable } from "rxjs";
 
 @Component({
   selector: "app-courses",
@@ -46,14 +45,14 @@ import { Observable } from "rxjs";
   templateUrl: "./courses.component.html",
   styleUrl: "./courses.component.css",
 })
-export class CoursesComponent implements OnInit {
-  private readonly coursesService = inject(CoursesService);
+export class PlaylistsComponent implements OnInit {
+  private readonly playlistService = inject(PlaylistService);
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly snackBar = inject(MatSnackBar);
   private readonly destroyRef = inject(DestroyRef);
 
-  courses = this.coursesService.allCourses;
-  totalElements = this.coursesService.totalElements;
+  playlists = this.playlistService.allPlaylists;
+  totalElements = this.playlistService.totalElements;
   displayedColumns: string[] = ["name", "category", "addCourse"];
   private readonly router = inject(Router);
 
@@ -62,14 +61,14 @@ export class CoursesComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.router.url.includes("/home")) {
-      this.coursesService.initCourses();
-    } else if (!sessionStorage.getItem("coursesDemo")) {
-      this.coursesService.resetCourses();
+      this.playlistService.initPlaylists();
+    } else if (!sessionStorage.getItem("playlistsDemo")) {
+      this.playlistService.resetPlaylists();
     }
   }
 
   refresh(pageEvent: PageEvent = { length: 0, pageIndex: 0, pageSize: 10 }) {
-    const subscription = this.coursesService.list(pageEvent.pageIndex, pageEvent.pageSize).subscribe();
+    const subscription = this.playlistService.list(pageEvent.pageIndex, pageEvent.pageSize).subscribe();
     this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }
 
@@ -77,14 +76,14 @@ export class CoursesComponent implements OnInit {
     this.router.navigate(["./course/new"], { relativeTo: this.activatedRoute });
   }
 
-  onEdit(course: Course) {
-    this.router.navigate(["./course/edit", course.id], {
+  onEdit(playlist: Playlist) {
+    this.router.navigate(["./course/edit", playlist.id], {
       relativeTo: this.activatedRoute,
     });
   }
 
-  onDelete(course: Course) {
-    this.coursesService.deleteCourse(course.id).subscribe({
+  onDelete(playlist: Playlist) {
+    this.playlistService.deletePlaylist(playlist.id).subscribe({
       next: (data) => console.log(data),
       error: (err) => {
         this.onError(), console.log(err);
@@ -106,8 +105,8 @@ export class CoursesComponent implements OnInit {
     });
   }
 
-  player(course: Course) {
-    this.router.navigate(["./course/player", course.id], {
+  player(playlist: Playlist) {
+    this.router.navigate(["./course/player", playlist.id], {
       relativeTo: this.activatedRoute,
     });
   }

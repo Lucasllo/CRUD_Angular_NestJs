@@ -4,16 +4,16 @@
       Demo
     </mat-toolbar>
     <div class="column-flex mat-elevation-z8">
-      <mat-table [dataSource]="courses()" class="mat-elevation-z8 mat-table">
+      <mat-table [dataSource]="playlists()" class="mat-elevation-z8 mat-table">
 
         <ng-container matColumnDef="name">
           <mat-header-cell *matHeaderCellDef> Nome </mat-header-cell>
-          <mat-cell *matCellDef="let course"> {{course.name}} </mat-cell>
+          <mat-cell *matCellDef="let playlist"> {{playlist.name}} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="category">
           <mat-header-cell *matHeaderCellDef> Categoria </mat-header-cell>
-          <mat-cell *matCellDef="let course"> {{course.category}}
+          <mat-cell *matCellDef="let playlist"> {{playlist.category}}
           </mat-cell>
         </ng-container>
 
@@ -24,17 +24,17 @@
             </button>
           </mat-header-cell>
 
-          <mat-cell *matCellDef="let course" class="action-column">
+          <mat-cell *matCellDef="let playlist" class="action-column">
 
-            <button mat-icon-button aria-label="Editar curso" color="accent" (click)="onEdit(course)">
+            <button mat-icon-button aria-label="Editar curso" color="accent" (click)="onEdit(playlist)">
               <mat-icon>edit</mat-icon>
             </button>
 
-            <button mat-icon-button aria-label="Deletar curso" color="warn" (click)="onDelete(course)">
+            <button mat-icon-button aria-label="Deletar curso" color="warn" (click)="onDelete(playlist)">
               <mat-icon>delete</mat-icon>
             </button>
 
-            <button mat-icon-button aria-label="visualizar lições do curso" color="accent" (click)="player(course)" type="button">
+            <button mat-icon-button aria-label="visualizar lições do curso" color="accent" (click)="player(playlist)" type="button">
               <mat-icon>headphones</mat-icon>
             </button>
 

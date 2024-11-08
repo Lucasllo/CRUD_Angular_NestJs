@@ -1,31 +1,17 @@
 import {
   AfterViewInit,
-  ChangeDetectorRef,
   Component,
   ElementRef,
   OnInit,
-  Signal,
   ViewChild,
-  computed,
   inject,
   input,
   signal,
 } from "@angular/core";
-import {
-  FormControl,
-  FormGroup,
-  NonNullableFormBuilder,
-  UntypedFormArray,
-  Validators,
-} from "@angular/forms";
-
-import { MatSnackBar } from "@angular/material/snack-bar";
-import { ActivatedRoute, Router, RouterLink } from "@angular/router";
-import { CoursesService } from "../../services/course.service";
-import { Lesson } from "../../models/lesson";
-import { Location } from "@angular/common";
+import { ActivatedRoute, } from "@angular/router";
+import { Video } from "../../models/video";
 import { MatSidenavModule } from "@angular/material/sidenav";
-import { Course } from "../../models/course";
+import { Playlist } from "../../models/playlist";
 import { MatButtonModule } from "@angular/material/button";
 import { MatListModule } from "@angular/material/list";
 import { YouTubePlayerModule } from "@angular/youtube-player";
@@ -42,9 +28,9 @@ import { YouTubePlayerModule } from "@angular/youtube-player";
   templateUrl: "./courses-view.component.html",
   styleUrl: "./courses-view.component.css",
 })
-export class CoursesViewComponent implements OnInit, AfterViewInit {
-  course = input<Course>({ id: "", category: "", lessons: [], name: "" });
-  selectedLesson = signal<Lesson>({ id: "", name: "", youtubeUrl: "" });
+export class PlaylistsViewComponent implements OnInit, AfterViewInit {
+  playlist = input<Playlist>({ id: "", category: "", videos: [], name: "" });
+  selectedVideo = signal<Video>({ id: "", name: "", youtubeUrl: "" });
   videoHeight = signal<number>(0);
   videoWidth = signal<number>(0);
   private route = inject(ActivatedRoute);
@@ -52,8 +38,8 @@ export class CoursesViewComponent implements OnInit, AfterViewInit {
   @ViewChild("youTubePlayer") youTubePlayer!: ElementRef<HTMLDivElement>;
 
   ngOnInit() {
-    if (this.course().lessons)
-      this.selectedLesson.set(this.course().lessons[0]);
+    if (this.playlist().videos)
+      this.selectedVideo.set(this.playlist().videos[0]);
 
     // https://developers.google.com/youtube/iframe_api_reference#Getting_Started
     const tag = document.createElement("script");
@@ -70,11 +56,11 @@ export class CoursesViewComponent implements OnInit, AfterViewInit {
     this.videoHeight.set(this.videoWidth() * 0.6);
   }
 
-  display(lesson: Lesson) {
-    this.selectedLesson.set(lesson);
+  display(video: Video) {
+    this.selectedVideo.set(video);
   }
 
-  displaySelectedLesson(lesson: Lesson) {
-    return this.selectedLesson() === lesson;
+  displaySelectedVideo(video: Video) {
+    return this.selectedVideo() === video;
   }
 }

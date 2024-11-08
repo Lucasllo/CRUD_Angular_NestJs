@@ -1,26 +1,26 @@
-import { CoursesService } from '../services/course.service';
+import { PlaylistService } from '../services/playlist.service';
 import {
   ActivatedRouteSnapshot,
   ResolveFn,
   RouterStateSnapshot,
 } from '@angular/router';
 import { inject } from '@angular/core';
-import { Course } from '../models/course';
+import { Playlist } from '../models/playlist';
 
-export const resolveCourse: ResolveFn<Course> = (
+export const resolvePlaylist: ResolveFn<Playlist> = (
   activatedRoute: ActivatedRouteSnapshot,
   routerState: RouterStateSnapshot
 ) => {
-  const coursesService = inject(CoursesService);
-  let course: Course = { id: '', name: '', category: '', lessons: [] };
+  const playlistService = inject(PlaylistService);
+  let playlist: Playlist = { id: '', name: '', category: '', videos: [] };
 
   if (activatedRoute.paramMap && activatedRoute.paramMap.get('idCourse')) {
-    coursesService
+    playlistService
       .loadById(activatedRoute.paramMap.get('idCourse')!)
       .subscribe({
-        next: (value) => (course = value),
+        next: (value) => (playlist = value),
       });
   }
 
-  return course;
+  return playlist;
 };

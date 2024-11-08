@@ -36,7 +36,7 @@ import { MatSelect } from "@angular/material/select";
 import { MatCheckbox } from "@angular/material/checkbox";
 import { MatButtonModule } from "@angular/material/button";
 import { UserService } from "../../services/user.service";
-import { Course } from "../../models/course";
+import { Playlist } from "../../models/playlist";
 
 function equalValues(controlName1: string, controlName2: string) {
   return (control: AbstractControl) => {
@@ -99,7 +99,7 @@ export class LoginComponent implements OnInit {
   }
 
   createForm() {
-    let course!: Course;
+    let course!: Playlist;
     this.form = this.formBuilder.group({
       email: new FormControl("", {
         validators: [Validators.email, Validators.required],

@@ -1,4 +1,4 @@
-import { CoursesService } from '../services/course.service';
+import { PlaylistService } from '../services/playlist.service';
 import {
   ActivatedRouteSnapshot,
   ResolveFn,
@@ -6,21 +6,21 @@ import {
 } from '@angular/router';
 import { inject } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
-import { Course } from '../models/course';
+import { Playlist } from '../models/playlist';
 
-export const resolveUserCourse: ResolveFn<Course> = async (
+export const resolveUserPlaylist: ResolveFn<Playlist> = async (
   activatedRoute: ActivatedRouteSnapshot,
   routerState: RouterStateSnapshot
 ) => {
-  const coursesService = inject(CoursesService);
-  let course: Course = { id: '', name: '', category: '', lessons: [] };
+  const playlistService = inject(PlaylistService);
+  let playlist: Playlist = { id: '', name: '', category: '', videos: [] };
   if (activatedRoute.paramMap && activatedRoute.paramMap.get('idCourse')) {
-    course = await firstValueFrom(
-      coursesService.loadUserCourseById(
+    playlist = await firstValueFrom(
+      playlistService.loadUserPlaylistById(
         activatedRoute.paramMap.get('idCourse')!
       )
     );
   }
 
-  return course;
+  return playlist;
 };

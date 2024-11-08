@@ -31,17 +31,16 @@ import { MatIcon } from "@angular/material/icon";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatToolbar } from "@angular/material/toolbar";
 import { ActivatedRoute, Router, RouterLink } from "@angular/router";
-import { CoursesService } from "../../services/course.service";
-import { Lesson } from "../../models/lesson";
+import { PlaylistService } from "../../services/playlist.service";
+import { Video } from "../../models/video";
 import { Location } from "@angular/common";
 import { MatInputModule } from "@angular/material/input";
 import { MatSelect } from "@angular/material/select";
 import {
-  MatButton,
   MatButtonModule,
   MatIconButton,
 } from "@angular/material/button";
-import { Course } from "../../models/course";
+import { Playlist } from "../../models/playlist";
 import { MatDialog } from "@angular/material/dialog";
 import { DialogComponent } from "../dialog/dialog.component";
 
@@ -71,8 +70,8 @@ import { DialogComponent } from "../dialog/dialog.component";
   templateUrl: "./course-form.component.html",
   styleUrl: "./course-form.component.css",
 })
-export class CourseFormComponent implements OnInit {
-  private readonly coursesService = inject(CoursesService);
+export class PlaylistFormComponent implements OnInit {
+  private readonly coursesService = inject(PlaylistService);
   private readonly formBuilder = inject(NonNullableFormBuilder);
   private readonly snackBar = inject(MatSnackBar);
   private readonly location = inject(Location);
@@ -81,7 +80,7 @@ export class CourseFormComponent implements OnInit {
   readonly dialog = inject(MatDialog);
 
   form!: FormGroup;
-  course = input.required<Course>();
+  course = input.required<Playlist>();
   submitted = false;
   categories = this.coursesService.allCategories;
 
@@ -115,11 +114,11 @@ export class CourseFormComponent implements OnInit {
     });
   }
 
-  private retrieveLessons(course: Course) {
+  private retrieveLessons(course: Playlist) {
     const lessons = [];
 
-    if (course?.lessons) {
-      course.lessons.forEach((lesson) => {
+    if (course?.videos) {
+      course.videos.forEach((lesson) => {
         lessons.push(this.createLesson(lesson));
       });
     } else {
@@ -129,7 +128,7 @@ export class CourseFormComponent implements OnInit {
     return lessons;
   }
 
-  private createLesson(lesson: Lesson = { id: "", name: "", youtubeUrl: "" }) {
+  private createLesson(lesson: Video = { id: "", name: "", youtubeUrl: "" }) {
     return this.formBuilder.group({
       _id: new FormControl(lesson.id),
       name: new FormControl(lesson.name, {

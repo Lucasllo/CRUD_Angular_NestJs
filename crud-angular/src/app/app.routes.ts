@@ -1,9 +1,8 @@
-import { CoursesViewComponent } from "./components/courses-view/courses-view.component";
 import { CanMatchFn, RedirectCommand, Router, Routes } from "@angular/router";
 import { HomeComponent } from "./components/home/home.component";
 import { resolveUserName } from "./guards/user.resolver";
-import { resolveCourse } from "./guards/course.resolver";
-import { resolveUserCourses } from "./guards/user-courses.resolver";
+import { resolvePlaylist } from "./guards/playlist.resolver";
+import { resolveUserPlaylists } from "./guards/user-playlists.resolver";
 import { inject } from "@angular/core";
 import { firstValueFrom } from "rxjs";
 import { UserService } from "./services/user.service";
@@ -58,7 +57,7 @@ export const routes: Routes = [
     loadChildren: () =>
       import("./routes/user.routes").then((mod) => mod.routes),
     resolve: {
-      userCourses: resolveUserCourses,
+      userPlaylists: resolveUserPlaylists,
     },
     runGuardsAndResolvers: "always",
     canMatch: [canMatch],
@@ -68,7 +67,7 @@ export const routes: Routes = [
     path: "home/course/new",
     loadComponent: () =>
       import("./components/course-form/course-form.component").then(
-        (mod) => mod.CourseFormComponent
+        (mod) => mod.PlaylistFormComponent
       ),
   },
   {
@@ -76,10 +75,10 @@ export const routes: Routes = [
     path: "home/course/edit/:idCourse",
     loadComponent: () =>
       import("./components/course-form/course-form.component").then(
-        (mod) => mod.CourseFormComponent
+        (mod) => mod.PlaylistFormComponent
       ),
     resolve: {
-      course: resolveCourse,
+      playlist: resolvePlaylist,
     },
   },
   {
@@ -87,10 +86,10 @@ export const routes: Routes = [
     path: "home/course/player/:idCourse",
     loadComponent: () =>
       import("./components/courses-view/courses-view.component").then(
-        (mod) => mod.CoursesViewComponent
+        (mod) => mod.PlaylistsViewComponent
       ),
     resolve: {
-      course: resolveCourse,
+      playlist: resolvePlaylist,
     },
   },
 ];

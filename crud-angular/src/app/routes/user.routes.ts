@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
-import { CoursesComponent } from '../components/courses/courses.component';
-import { CourseFormComponent } from '../components/course-form/course-form.component';
-import { resolveUserCourse } from '../guards/user-course.resolver';
-import { CoursesViewComponent } from '../components/courses-view/courses-view.component';
+import { PlaylistsComponent } from '../components/courses/courses.component';
+import { PlaylistFormComponent } from '../components/course-form/course-form.component';
+import { resolveUserPlaylist } from '../guards/user-playlist.resolver';
+import { PlaylistsViewComponent } from '../components/courses-view/courses-view.component';
 
 // export const canLeaveEditPage: CanDeactivateFn<TaskFormComponent> = (component) => {
 //   if (component.submitted) {
@@ -25,27 +25,27 @@ export const routes: Routes = [
       },
       {
         path: 'courses',
-        component: CoursesComponent,
+        component: PlaylistsComponent,
       },
       {
         path: 'courses/course/new',
-        component: CourseFormComponent,
+        component: PlaylistFormComponent,
         // canDeactivate: [canLeaveEditPage]
       },
       {
         path: 'courses/course/edit/:idCourse',
-        component: CourseFormComponent,
+        component: PlaylistFormComponent,
         // canDeactivate: [canLeaveEditPage],
         resolve: {
-          course: resolveUserCourse,
+          playlist: resolveUserPlaylist,
         },
         runGuardsAndResolvers: 'always'
       },
       {
         path: 'courses/course/player/:idCourse',
-        component: CoursesViewComponent,
+        component: PlaylistsViewComponent,
         resolve: {
-          course: resolveUserCourse,
+          playlist: resolveUserPlaylist,
         },
       },
     ],
