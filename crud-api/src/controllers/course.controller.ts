@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { CourseService } from '../services/course.service';
 import { CreateCourseDto } from '../dtos/course/create-course.dto';
@@ -25,8 +26,8 @@ export class CourseController {
   }
 
   @Get('coursesByUser')
-  findAllByUser(@User() user: UserEntity) {
-    return this.courseService.findAllByUser(user.id);
+  findAllByUser(@User() user: UserEntity, @Query() params:{page: number, pageSize: number}) {
+    return this.courseService.findAllByUser(user.id, params.page, params.pageSize);
   }
 
   @Get('coursesCategoryByUser')

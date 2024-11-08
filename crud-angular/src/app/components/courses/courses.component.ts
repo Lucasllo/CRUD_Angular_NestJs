@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, input, signal } from "@angular/core";
+import { Component, DestroyRef, OnInit, inject, input, signal } from "@angular/core";
 import { MatIcon } from "@angular/material/icon";
 import {
   MatCell,
@@ -19,6 +19,8 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { CoursesService } from "../../services/course.service";
 import { Course } from "../../models/course";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { MatPaginator, PageEvent } from "@angular/material/paginator";
+import { Observable } from "rxjs";
 
 @Component({
   selector: "app-courses",
@@ -39,6 +41,7 @@ import { MatSnackBar } from "@angular/material/snack-bar";
     MatCard,
     MatCardContent,
     MatButtonModule,
+    MatPaginator
   ],
   templateUrl: "./courses.component.html",
   styleUrl: "./courses.component.css",
@@ -47,9 +50,15 @@ export class CoursesComponent implements OnInit {
   private readonly coursesService = inject(CoursesService);
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly snackBar = inject(MatSnackBar);
+  private readonly destroyRef = inject(DestroyRef);
+
   courses = this.coursesService.allCourses;
+  totalElements = this.coursesService.totalElements;
   displayedColumns: string[] = ["name", "category", "addCourse"];
   private readonly router = inject(Router);
+
+  pageIndex = signal<number>(0);
+  pageSize = signal<number>(10);
 
   ngOnInit(): void {
     if (this.router.url.includes("/home")) {
@@ -57,6 +66,11 @@ export class CoursesComponent implements OnInit {
     } else if (!sessionStorage.getItem("coursesDemo")) {
       this.coursesService.resetCourses();
     }
+  }
+
+  refresh(pageEvent: PageEvent = { length: 0, pageIndex: 0, pageSize: 10 }) {
+    const subscription = this.coursesService.list(pageEvent.pageIndex, pageEvent.pageSize).subscribe();
+    this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }
 
   onAdd() {

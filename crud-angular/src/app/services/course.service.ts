@@ -4,6 +4,7 @@ import { Observable, of, tap } from "rxjs";
 import { UserService } from "./user.service";
 import { Course } from "../models/course";
 import { Router } from "@angular/router";
+import { CoursePage } from "../models/course-page";
 
 @Injectable({
   providedIn: "root",
@@ -38,9 +39,11 @@ export class CoursesService {
 
   private readonly categories = signal<string[]>([]);
   private readonly courses = signal<Course[]>([]);
+  private readonly elementsLength = signal<number>(0);
 
   allCourses = this.courses.asReadonly();
   allCategories = this.categories.asReadonly();
+  totalElements = this.elementsLength.asReadonly();
 
   constructor() {
     this.initCourses();
@@ -118,16 +121,17 @@ export class CoursesService {
     });
   }
 
-  loadByUserId(): Observable<Course[]> {
+  list(page = 0, pageSize = 10): Observable<CoursePage> {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${sessionStorage.getItem("token")}`,
     });
 
     return this.httpClient
-      .get<Course[]>(`http://localhost:3000/course/coursesByUser`, {
+      .get<CoursePage>(`http://localhost:3000/course/coursesByUser`, {
+        params: { page, pageSize },
         headers: headers,
       })
-      .pipe(tap({ next: (data) => this.courses.set(data) }));
+      .pipe(tap({ next: (data) => {this.courses.set(data.courses); this.elementsLength.set(data.total)}  }));
   }
 
   loadCategoriesByUserId(): void {

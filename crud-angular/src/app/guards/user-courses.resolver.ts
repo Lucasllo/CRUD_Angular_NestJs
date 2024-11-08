@@ -16,7 +16,7 @@ export const resolveUserCourses: ResolveFn<Course[]> = async (
   let courses: Course[] = [{ id: "", name: "", category: "", lessons: [] }];
 
   if (sessionStorage.getItem("token")) {
-    courses = await firstValueFrom(coursesService.loadByUserId());
+    courses = (await firstValueFrom(coursesService.list())).courses;
     coursesService.loadCategoriesByUserId();
   }
 
