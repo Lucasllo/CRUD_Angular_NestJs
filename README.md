@@ -6,6 +6,8 @@ This project is a basic CRUD using [Angular CLI](https://github.com/angular/angu
 
 - NodeJs
 - NestJs
+- JWT
+- Bcrypt
 - Sqlite
 - Jest + Supertest (back-end tests)
 - Angular v18
