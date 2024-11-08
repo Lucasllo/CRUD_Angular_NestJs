@@ -20,7 +20,7 @@ export class UserService {
       lastName: "teste",
       email: "lucasteste@mailinator.com",
       dateBirth: this.dateWithoutTimezone(new Date("10/10/1995")),
-      password: "Asdf@1234",
+      password: "$2b$10$Nq.tY4hK4ACZItSHQKAyWuF0bQEBW5o4JDPpvXm4DUmYuSAMAKWs2", //Asdf@1234
       gender: "Masculino",
       agree: true,
       courses: [],
