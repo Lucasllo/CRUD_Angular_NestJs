@@ -104,7 +104,7 @@ export class CourseService {
     this.categories.push({userId: userId, values: ['Front-end', 'Back-end']})
     this.courses.push(newCourse);
     console.log(this.courses);
-    return CreateCourseDto;
+    return createCourseDto;
   }
 
   findAll() {
