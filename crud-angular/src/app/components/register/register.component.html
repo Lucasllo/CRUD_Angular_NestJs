@@ -76,7 +76,7 @@
         <mat-form-field class="full-width">
           <mat-label>Confirmar senha</mat-label>
           <input matInput formControlName="confirmPassword" type="password">
-          @if (form.get('confirmPassword')?.invalid) {
+          @if (form.get('passwords')?.get('confirmPassword')?.invalid) {
           <mat-error>
             {{getErrorMessage('confirmPassword')}}
           </mat-error>
@@ -86,7 +86,7 @@
 
       <div class="full-width">
         <mat-checkbox formControlName="agree">Concordar em receber emails informativos.</mat-checkbox>
-        @if (form.get('agree')?.invalid) {
+        @if (form.get('passwords')?.get('agree')?.invalid) {
         <mat-error>
           {{getErrorMessage('agree')}}
         </mat-error>

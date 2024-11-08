@@ -97,7 +97,7 @@ export class RegisterComponent implements OnInit {
     dateBirth: new Date(),
     gender: "",
     password: "",
-    agree: false,
+    agree: true,
   };
   private readonly formBuiler = inject(FormBuilder);
   private readonly snackBar = inject(MatSnackBar);
@@ -155,7 +155,7 @@ export class RegisterComponent implements OnInit {
         }
       ),
       agree: new FormControl(this.user.agree, {
-        validators: [Validators.required],
+        validators: [Validators.requiredTrue],
       }),
     });
   }
