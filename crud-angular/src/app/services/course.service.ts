@@ -57,7 +57,7 @@ export class CoursesService {
       this.resetCourses();
       sessionStorage.setItem("coursesDemo", JSON.stringify(this.courses()));
     }
-
+    this.elementsLength.set(this.courses().length);
     let categoriesDemo = sessionStorage.getItem("categoriesDemo");
     if (categoriesDemo) {
       console.log("categoria aqui");
@@ -71,12 +71,9 @@ export class CoursesService {
     }
   }
 
-  setCourses(courses: InputSignal<Course[]>) {
-    this.courses.set(courses());
-  }
-
   resetCourses() {
     this.courses.set(this.initialCourses);
+    this.elementsLength.set(this.courses().length);
   }
 
   resetCategories() {
