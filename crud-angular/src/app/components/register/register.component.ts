@@ -25,9 +25,7 @@ import {
   MatHint,
   MatLabel,
 } from "@angular/material/form-field";
-import { MatIcon } from "@angular/material/icon";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { MatToolbar } from "@angular/material/toolbar";
 import { Location } from "@angular/common";
 import { MatInputModule } from "@angular/material/input";
 import { MatDatepickerModule } from "@angular/material/datepicker";
@@ -62,8 +60,6 @@ function equalValues(controlName1: string, controlName2: string) {
     MatError,
     MatLabel,
     MatOption,
-    MatToolbar,
-    MatIcon,
     MatCard,
     MatCardActions,
     MatSelect,

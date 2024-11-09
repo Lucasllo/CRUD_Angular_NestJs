@@ -14,29 +14,16 @@ import {
   MatCardHeader,
   MatCardTitle,
 } from "@angular/material/card";
-import {
-  DateAdapter,
-  MAT_DATE_LOCALE,
-  MatOption,
-} from "@angular/material/core";
-import {
-  MatError,
-  MatFormField,
-  MatHint,
-  MatLabel,
-} from "@angular/material/form-field";
+import { DateAdapter, MAT_DATE_LOCALE } from "@angular/material/core";
+import { MatError, MatFormField, MatLabel } from "@angular/material/form-field";
 import { MatIcon } from "@angular/material/icon";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { MatToolbar } from "@angular/material/toolbar";
 import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 import { Location } from "@angular/common";
 import { MatInputModule } from "@angular/material/input";
 import { MatDatepickerModule } from "@angular/material/datepicker";
-import { MatSelect } from "@angular/material/select";
-import { MatCheckbox } from "@angular/material/checkbox";
 import { MatButtonModule } from "@angular/material/button";
 import { UserService } from "../../services/user.service";
-import { Playlist } from "../../models/playlist";
 
 function equalValues(controlName1: string, controlName2: string) {
   return (control: AbstractControl) => {
@@ -58,16 +45,11 @@ function equalValues(controlName1: string, controlName2: string) {
     ReactiveFormsModule,
     MatCardContent,
     MatFormField,
-    MatHint,
     MatError,
     MatLabel,
-    MatOption,
-    MatToolbar,
     MatIcon,
     MatCard,
     MatCardActions,
-    MatSelect,
-    MatCheckbox,
     MatButtonModule,
     MatInputModule,
     MatDatepickerModule,

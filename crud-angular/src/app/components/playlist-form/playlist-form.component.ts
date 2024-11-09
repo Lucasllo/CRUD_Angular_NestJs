@@ -1,11 +1,4 @@
-import {
-  Component,
-  OnInit,
-  computed,
-  inject,
-  input,
-  signal,
-} from "@angular/core";
+import { Component, OnInit, computed, inject, input } from "@angular/core";
 import {
   FormControl,
   FormGroup,
@@ -30,7 +23,7 @@ import {
 import { MatIcon } from "@angular/material/icon";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatToolbar } from "@angular/material/toolbar";
-import { ActivatedRoute, Router, RouterLink } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { PlaylistService } from "../../services/playlist.service";
 import { Video } from "../../models/video";
 import { Location } from "@angular/common";
@@ -61,7 +54,6 @@ import { DialogComponent } from "../dialog/dialog.component";
     MatSelect,
     MatButtonModule,
     MatIconButton,
-    RouterLink,
     MatIcon,
   ],
   templateUrl: "./playlist-form.component.html",
