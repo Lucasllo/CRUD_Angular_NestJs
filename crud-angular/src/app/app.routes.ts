@@ -64,17 +64,17 @@ export const routes: Routes = [
   },
   {
     title: "Nova Tarefa",
-    path: "home/course/new",
+    path: "home/playlist/new",
     loadComponent: () =>
-      import("./components/course-form/course-form.component").then(
+      import("./components/playlist-form/playlist-form.component").then(
         (mod) => mod.PlaylistFormComponent
       ),
   },
   {
     title: "Editar Tarefa",
-    path: "home/course/edit/:idCourse",
+    path: "home/playlist/edit/:idPlaylist",
     loadComponent: () =>
-      import("./components/course-form/course-form.component").then(
+      import("./components/playlist-form/playlist-form.component").then(
         (mod) => mod.PlaylistFormComponent
       ),
     resolve: {
@@ -83,10 +83,10 @@ export const routes: Routes = [
   },
   {
     title: "Visualizar Videos",
-    path: "home/course/player/:idCourse",
+    path: "home/playlist/player/:idPlaylist",
     loadComponent: () =>
-      import("./components/courses-view/courses-view.component").then(
-        (mod) => mod.PlaylistsViewComponent
+      import("./components/playlist-view/playlist-view.component").then(
+        (mod) => mod.PlaylistViewComponent
       ),
     resolve: {
       playlist: resolvePlaylist,

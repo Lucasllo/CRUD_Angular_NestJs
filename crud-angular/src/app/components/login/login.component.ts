@@ -99,7 +99,6 @@ export class LoginComponent implements OnInit {
   }
 
   createForm() {
-    let course!: Playlist;
     this.form = this.formBuilder.group({
       email: new FormControl("", {
         validators: [Validators.email, Validators.required],
@@ -125,7 +124,7 @@ export class LoginComponent implements OnInit {
           complete: () => {
             this.onSuccess();
             if (sessionStorage.getItem("token")) {
-              this.router.navigate(["user", "courses"]);
+              this.router.navigate(["user", "playlists"]);
             }
           },
         });

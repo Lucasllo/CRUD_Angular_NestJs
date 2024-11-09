@@ -112,9 +112,12 @@ export class PlaylistService {
       Authorization: `Bearer ${sessionStorage.getItem("token")}`,
     });
 
-    return this.httpClient.get<Playlist>(`http://localhost:3000/course/` + id, {
-      headers: headers,
-    });
+    return this.httpClient.get<Playlist>(
+      `http://localhost:3000/playlist/` + id,
+      {
+        headers: headers,
+      }
+    );
   }
 
   list(page = 0, pageSize = 10): Observable<PlaylistPage> {
@@ -123,11 +126,18 @@ export class PlaylistService {
     });
 
     return this.httpClient
-      .get<PlaylistPage>(`http://localhost:3000/course/coursesByUser`, {
+      .get<PlaylistPage>(`http://localhost:3000/playlist/playlistsByUser`, {
         params: { page, pageSize },
         headers: headers,
       })
-      .pipe(tap({ next: (data: PlaylistPage) => {this.playlists.set(data.playlists); this.elementsLength.set(data.total)}  }));
+      .pipe(
+        tap({
+          next: (data: PlaylistPage) => {
+            this.playlists.set(data.playlists);
+            this.elementsLength.set(data.total);
+          },
+        })
+      );
   }
 
   loadCategoriesByUserId(): void {
@@ -136,7 +146,7 @@ export class PlaylistService {
     });
     this.httpClient
       .get<{ userId: number; values: string[] }>(
-        `http://localhost:3000/course/coursesCategoryByUser`,
+        `http://localhost:3000/playlist/playlistsCategoryByUser`,
         { headers: headers }
       )
       .subscribe({
@@ -152,7 +162,7 @@ export class PlaylistService {
       Authorization: `Bearer ${sessionStorage.getItem("token")}`,
     });
     return this.httpClient.post<Playlist>(
-      `http://localhost:3000/course`,
+      `http://localhost:3000/playlist`,
       playlist,
       {
         headers: headers,
@@ -165,7 +175,7 @@ export class PlaylistService {
       Authorization: `Bearer ${sessionStorage.getItem("token")}`,
     });
     return this.httpClient.patch<Playlist>(
-      `http://localhost:3000/course/` + playlistUpdated.id,
+      `http://localhost:3000/playlist/` + playlistUpdated.id,
       playlistUpdated,
       {
         headers: headers,
@@ -199,7 +209,9 @@ export class PlaylistService {
     let categoriesDemo = sessionStorage.getItem("categoriesDemo");
     if (categoriesDemo) {
       if (
-        !(JSON.parse(categoriesDemo) as Array<string>).includes(playlist.category)
+        !(JSON.parse(categoriesDemo) as Array<string>).includes(
+          playlist.category
+        )
       ) {
         sessionStorage.setItem(
           "categoriesDemo",
@@ -227,7 +239,7 @@ export class PlaylistService {
   }
 
   deletePlaylist(id: string) {
-    if (this.router.url.includes("/user/courses")) {
+    if (this.router.url.includes("/user/playlists")) {
       return this.delete(id);
     } else {
       return this.deleteDemo(id);
@@ -257,7 +269,7 @@ export class PlaylistService {
       Authorization: `Bearer ${sessionStorage.getItem("token")}`,
     });
     return this.httpClient.delete<Playlist>(
-      `http://localhost:3000/course/` + id,
+      `http://localhost:3000/playlist/` + id,
       {
         headers: headers,
       }

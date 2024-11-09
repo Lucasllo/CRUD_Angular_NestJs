@@ -4,10 +4,13 @@ import { UpdateUserDto } from "../dtos/user/update-user.dto";
 import { LoginDto } from "src/dtos/auth/login/login.dto";
 import { UserEntity } from "src/entities/user.entity";
 import * as bcrypt from "bcrypt";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
+import { UserRepository } from "src/repositories/user.repository";
 
 @Injectable()
 export class UserService {
-  private dateWithoutTimezone = (date: Date) => {
+  private readonly dateWithoutTimezone = (date: Date) => {
     const tzoffset = date.getTimezoneOffset() * 60000; //offset in milliseconds
     const withoutTimezone = new Date(date.valueOf() - tzoffset);
     return withoutTimezone;
@@ -27,6 +30,7 @@ export class UserService {
       createdAt: this.dateWithoutTimezone(new Date()),
       updatedAt: this.dateWithoutTimezone(new Date()),
       validatedEmail: true,
+      active: true,
     },
     {
       id: 2,
@@ -41,11 +45,17 @@ export class UserService {
       createdAt: this.dateWithoutTimezone(new Date()),
       updatedAt: this.dateWithoutTimezone(new Date()),
       validatedEmail: true,
+      active: true,
     },
   ];
 
+  constructor(private readonly userRepository: UserRepository) {
+    this.users.forEach((user) => {
+      this.userRepository.create(user);
+    });
+  }
+
   async create(createUserDto: CreateUserDto) {
-    console.log(typeof createUserDto.dateBirth);
     const user: UserEntity = {
       ...createUserDto,
       dateBirth: this.dateWithoutTimezone(new Date(createUserDto.dateBirth)),
@@ -58,14 +68,15 @@ export class UserService {
         createUserDto.password,
         await bcrypt.genSalt()
       ),
+      active: true,
     };
 
     this.users.push(user);
     return createUserDto;
   }
 
-  findAll() {
-    return this.users;
+  async findAll() {
+    return await this.userRepository.findAll();
   }
 
   findOne(id: number) {

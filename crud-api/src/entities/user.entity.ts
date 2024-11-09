@@ -5,10 +5,10 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-} from 'typeorm';
-import { PlaylistEntity } from './course.entity';
+} from "typeorm";
+import { PlaylistEntity } from "./playlist.entity";
 
-@Entity({ name: 'user' })
+@Entity({ name: "user" })
 export class UserEntity {
   @PrimaryGeneratedColumn({
     unsigned: true,
@@ -55,6 +55,9 @@ export class UserEntity {
 
   @Column()
   agree: boolean;
+
+  @Column()
+  active: boolean;
 
   @OneToMany(() => PlaylistEntity, (playlist) => playlist.user, {
     cascade: true,

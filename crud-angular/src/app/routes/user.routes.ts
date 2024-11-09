@@ -1,8 +1,8 @@
-import { Routes } from '@angular/router';
-import { PlaylistsComponent } from '../components/courses/courses.component';
-import { PlaylistFormComponent } from '../components/course-form/course-form.component';
-import { resolveUserPlaylist } from '../guards/user-playlist.resolver';
-import { PlaylistsViewComponent } from '../components/courses-view/courses-view.component';
+import { Routes } from "@angular/router";
+import { PlaylistsComponent } from "../components/playlists/playlists.component";
+import { PlaylistFormComponent } from "../components/playlist-form/playlist-form.component";
+import { resolveUserPlaylist } from "../guards/user-playlist.resolver";
+import { PlaylistViewComponent } from "../components/playlist-view/playlist-view.component";
 
 // export const canLeaveEditPage: CanDeactivateFn<TaskFormComponent> = (component) => {
 //   if (component.submitted) {
@@ -16,34 +16,34 @@ import { PlaylistsViewComponent } from '../components/courses-view/courses-view.
 
 export const routes: Routes = [
   {
-    path: '',
+    path: "",
     children: [
       {
-        path: '',
-        redirectTo: 'courses',
-        pathMatch: 'full',
+        path: "",
+        redirectTo: "playlists",
+        pathMatch: "full",
       },
       {
-        path: 'courses',
+        path: "playlists",
         component: PlaylistsComponent,
       },
       {
-        path: 'courses/course/new',
+        path: "playlists/playlist/new",
         component: PlaylistFormComponent,
         // canDeactivate: [canLeaveEditPage]
       },
       {
-        path: 'courses/course/edit/:idCourse',
+        path: "playlists/playlist/edit/:idPlaylist",
         component: PlaylistFormComponent,
         // canDeactivate: [canLeaveEditPage],
         resolve: {
           playlist: resolveUserPlaylist,
         },
-        runGuardsAndResolvers: 'always'
+        runGuardsAndResolvers: "always",
       },
       {
-        path: 'courses/course/player/:idCourse',
-        component: PlaylistsViewComponent,
+        path: "playlists/playlist/player/:idPlaylist",
+        component: PlaylistViewComponent,
         resolve: {
           playlist: resolveUserPlaylist,
         },
