@@ -4,11 +4,14 @@ import { Observable, of, tap } from "rxjs";
 import { Playlist } from "../models/playlist";
 import { Router } from "@angular/router";
 import { PlaylistPage } from "../models/playlist-page";
+import { environment } from "../../environments/environment.development";
 
 @Injectable({
   providedIn: "root",
 })
 export class PlaylistService {
+  private readonly API = environment.API;
+
   private readonly httpClient = inject(HttpClient);
   private readonly router = inject(Router);
   private readonly initialPlaylists: Playlist[] = [
@@ -113,7 +116,7 @@ export class PlaylistService {
     });
 
     return this.httpClient.get<Playlist>(
-      `http://localhost:3000/playlist/` + id,
+      `${this.API}/playlist/${id}`,
       {
         headers: headers,
       }
@@ -126,7 +129,7 @@ export class PlaylistService {
     });
 
     return this.httpClient
-      .get<PlaylistPage>(`http://localhost:3000/playlist/playlistsByUser`, {
+      .get<PlaylistPage>(`${this.API}/playlist/playlistsByUser`, {
         params: { page, pageSize },
         headers: headers,
       })
@@ -146,7 +149,7 @@ export class PlaylistService {
     });
     this.httpClient
       .get<{ userId: number; values: string[] }>(
-        `http://localhost:3000/playlist/playlistsCategoryByUser`,
+        `${this.API}/playlist/playlistsCategoryByUser`,
         { headers: headers }
       )
       .subscribe({
@@ -162,7 +165,7 @@ export class PlaylistService {
       Authorization: `Bearer ${sessionStorage.getItem("token")}`,
     });
     return this.httpClient.post<Playlist>(
-      `http://localhost:3000/playlist`,
+      `${this.API}/playlist`,
       playlist,
       {
         headers: headers,
@@ -175,7 +178,7 @@ export class PlaylistService {
       Authorization: `Bearer ${sessionStorage.getItem("token")}`,
     });
     return this.httpClient.patch<Playlist>(
-      `http://localhost:3000/playlist/` + playlistUpdated.id,
+      `${this.API}/playlist/` + playlistUpdated.id,
       playlistUpdated,
       {
         headers: headers,
@@ -269,7 +272,7 @@ export class PlaylistService {
       Authorization: `Bearer ${sessionStorage.getItem("token")}`,
     });
     return this.httpClient.delete<Playlist>(
-      `http://localhost:3000/playlist/` + id,
+      `${this.API}/playlist/${id}`,
       {
         headers: headers,
       }

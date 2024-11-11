@@ -3,12 +3,13 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { inject, Injectable, signal } from "@angular/core";
 import { User } from "../models/user";
 import { catchError, map, Observable, of, tap, throwError } from "rxjs";
+import { environment } from "../../environments/environment.development";
 
 @Injectable({
   providedIn: "root",
 })
 export class UserService {
-  private readonly API = "http://localhost:3000";
+  private readonly API = environment.API;
   private readonly httpClient = inject(HttpClient);
   private readonly users = signal<User[]>([
     {
