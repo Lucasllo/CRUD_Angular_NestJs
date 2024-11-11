@@ -4,8 +4,8 @@ import { LoginDto } from '../dtos/auth/login/login.dto';
 import { LoginReturnDto } from '../dtos/auth/login/login-return.dto';
 import { Public } from '../decorators/public.decorator';
 import { AuthGuard } from '../guards/auth.guard';
-import { User } from 'src/decorators/user.decorator';
-import { UserEntity } from 'src/entities/user.entity';
+import { User } from '../decorators/user.decorator';
+import { UserEntity } from '../entities/user.entity';
 
 @UseGuards(AuthGuard)
 @Controller('auth')

@@ -12,7 +12,7 @@ import { VideoService } from "../services/video.service";
 import { CreateVideoDto } from "../dtos/video/create-video.dto";
 import { UpdateVideoDto } from "../dtos/video/update-video.dto";
 import { AuthGuard } from "../guards/auth.guard";
-import { Public } from "src/decorators/public.decorator";
+import { Public } from "../decorators/public.decorator";
 
 UseGuards(AuthGuard);
 @Controller("video")

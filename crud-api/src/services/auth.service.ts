@@ -2,8 +2,8 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateAuthDto } from '../dtos/auth/create-auth.dto';
 import { UpdateAuthDto } from '../dtos/auth/update-auth.dto';
 import { JwtService } from '@nestjs/jwt';
-import { LoginDto } from 'src/dtos/auth/login/login.dto';
-import { LoginReturnDto } from 'src/dtos/auth/login/login-return.dto';
+import { LoginDto } from '../dtos/auth/login/login.dto';
+import { LoginReturnDto } from '../dtos/auth/login/login-return.dto';
 import { UserService } from './user.service';
 
 @Injectable()

@@ -14,7 +14,7 @@ import { CreatePlaylistDto } from "../dtos/playlist/create-playlist.dto";
 import { AuthGuard } from "../guards/auth.guard";
 import { User } from "../decorators/user.decorator";
 import { UserEntity } from "../entities/user.entity";
-import { Public } from "src/decorators/public.decorator";
+import { Public } from "../decorators/public.decorator";
 
 UseGuards(AuthGuard);
 @Controller("playlist")

@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { CreatePlaylistDto } from "../dtos/playlist/create-playlist.dto";
-import { PlaylistEntity } from "src/entities/playlist.entity";
-import { VideoEntity } from "src/entities/video.entity";
-import { PlaylistRepository } from "src/repositories/playlist.repository";
+import { PlaylistEntity } from "../entities/playlist.entity";
+import { VideoEntity } from "../entities/video.entity";
+import { PlaylistRepository } from "../repositories/playlist.repository";
 
 @Injectable()
 export class PlaylistService {
